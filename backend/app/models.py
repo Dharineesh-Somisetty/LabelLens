@@ -1,21 +1,16 @@
-from sqlalchemy import Column, String, Integer, Float, DateTime
+"""LabelLens – SQLAlchemy ORM models."""
+
+from __future__ import annotations
+from sqlalchemy import Column, String, Text, DateTime, func
 from .database import Base
 
-class Product(Base):
-    __tablename__ = "products"
 
-    barcode = Column(String, primary_key=True, index=True)
-    name = Column(String)
-    brand = Column(String)
-    image_url = Column(String)
-    ingredients_text = Column(String)
-    apex_score = Column(Float)
-    last_updated = Column(DateTime)
+class Session(Base):
+    __tablename__ = "sessions"
 
-class IngredientKnowledge(Base):
-    __tablename__ = "ingredients_knowledge"
+    session_id = Column(String, primary_key=True, index=True)
+    created_at = Column(DateTime, server_default=func.now())
+    product_json = Column(Text, default="{}")
+    analysis_json = Column(Text, default="{}")
+    user_profile_json = Column(Text, default="{}")
 
-    name = Column(String, primary_key=True)
-    type = Column(String)
-    bioavailability = Column(Integer)
-    bloat_risk = Column(Integer)

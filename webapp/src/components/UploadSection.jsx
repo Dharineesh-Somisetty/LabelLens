@@ -2,45 +2,94 @@ import { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { validateImageFile } from '../services/ocr';
 
+import Scanner from './Scanner';
+
 const BarcodeSearch = ({ onSearch }) => {
     const [barcode, setBarcode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isCameraMode, setIsCameraMode] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!barcode.trim()) return;
+        handleSearch(barcode);
+    };
 
+    const handleSearch = async (code) => {
         setIsLoading(true);
         try {
-            await onSearch(barcode);
+            await onSearch(code);
         } catch (error) {
-            // Error managed by parent or here if needed, but parent sets view.
             console.error(error);
         } finally {
             setIsLoading(false);
         }
     };
 
+    const handleScanSuccess = (decodedText) => {
+        // Stop scanning after success if needed, or just fill input
+        console.log("Scanned:", decodedText);
+        setBarcode(decodedText);
+        setIsCameraMode(false); // Switch back to view result
+        handleSearch(decodedText);
+    };
+
+    const handleScanFailure = (error) => {
+        // console.warn(error); // Ignore frame failures
+    };
+
     return (
-        <form onSubmit={handleSubmit} className="glass-strong p-6 mb-8 text-center">
+        <div className="glass-strong p-6 mb-8 text-center animate-slide-up">
             <h3 className="text-lg font-semibold mb-4 text-gray-200">Search by Barcode</h3>
-            <div className="flex gap-2">
-                <input
-                    type="text"
-                    value={barcode}
-                    onChange={(e) => setBarcode(e.target.value)}
-                    placeholder="Enter absolute barcode..."
-                    className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors"
-                />
+
+            {/* Toggle Buttons */}
+            <div className="flex justify-center gap-4 mb-6">
                 <button
-                    type="submit"
-                    disabled={isLoading || !barcode}
-                    className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    onClick={() => setIsCameraMode(false)}
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${!isCameraMode
+                        ? 'bg-white text-primary-900'
+                        : 'bg-white/10 text-gray-400 hover:bg-white/20'
+                        }`}
                 >
-                    {isLoading ? '...' : '🔍'}
+                    ⌨️ Enter Manually
+                </button>
+                <button
+                    onClick={() => setIsCameraMode(true)}
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${isCameraMode
+                        ? 'bg-white text-primary-900'
+                        : 'bg-white/10 text-gray-400 hover:bg-white/20'
+                        }`}
+                >
+                    📸 Scan Barcode
                 </button>
             </div>
-        </form>
+
+            {isCameraMode ? (
+                <Scanner
+                    onScanSuccess={handleScanSuccess}
+                    onScanFailure={handleScanFailure}
+                />
+            ) : (
+                <form onSubmit={handleSubmit}>
+                    <div className="flex gap-2">
+                        <input
+                            type="text"
+                            value={barcode}
+                            onChange={(e) => setBarcode(e.target.value)}
+                            placeholder="Enter barcode number..."
+                            className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-primary-500 transition-colors"
+                        />
+                        <button
+                            type="submit"
+                            disabled={isLoading || !barcode}
+                            className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {isLoading ? '...' : '🔍'}
+                        </button>
+                    </div>
+                </form>
+            )}
+        </div>
     );
 };
 

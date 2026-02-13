@@ -38,6 +38,26 @@ KEYWORD_RULES = [
     # --- Generic Fallbacks ---
     {'tag': 'protein',    'type': 'Protein', 'bio': 60,  'bloat': 2}, # Generic protein
     {'tag': 'gum',        'type': 'Additive','bio': 0,   'bloat': 5}, # Thickeners
+
+    # --- Vitamins & Minerals (The "Micro" Fix) ---
+    {'tag': 'vitamin',    'type': 'Micronutrient', 'bio': 100, 'bloat': 0},
+    {'tag': 'ascorbic',   'type': 'Micronutrient', 'bio': 100, 'bloat': 0}, # Vitamin C
+    {'tag': 'zinc',       'type': 'Micronutrient', 'bio': 100, 'bloat': 0},
+    {'tag': 'magnesium',  'type': 'Micronutrient', 'bio': 100, 'bloat': 1}, # Some forms bloat
+    {'tag': 'calcium',    'type': 'Micronutrient', 'bio': 80,  'bloat': 0},
+    {'tag': 'iron',       'type': 'Micronutrient', 'bio': 80,  'bloat': 2}, # Can cause stomach upset
+    {'tag': 'niacin',     'type': 'Micronutrient', 'bio': 100, 'bloat': 0}, # Vitamin B3
+
+    # --- US-Specific "Bad" Ingredients (The American Diet) ---
+    {'tag': 'high fructose', 'type': 'Sugar', 'bio': 0, 'bloat': 8}, # HFCS (Huge in US)
+    {'tag': 'corn syrup',    'type': 'Sugar', 'bio': 0, 'bloat': 5},
+    {'tag': 'soybean oil',   'type': 'Fat',   'bio': 0, 'bloat': 4}, # Most common US cheap fat
+    {'tag': 'canola',        'type': 'Fat',   'bio': 0, 'bloat': 3},
+    {'tag': 'red 40',        'type': 'Additive', 'bio': 0, 'bloat': 2}, # US Artificial Color
+    {'tag': 'yellow 5',      'type': 'Additive', 'bio': 0, 'bloat': 2},
+    {'tag': 'blue 1',        'type': 'Additive', 'bio': 0, 'bloat': 2},
+    {'tag': 'enriched flour','type': 'Carb',  'bio': 0, 'bloat': 3}, # US processed wheat
+    {'tag': 'carrageenan',   'type': 'Additive', 'bio': 0, 'bloat': 6}, # Common US thickener (gut irritant)
 ]
 
 def analyze_ingredient_heuristic(ingredient_name: str) -> dict:
@@ -99,6 +119,12 @@ def calculate_apex_score(ingredients: List[str], mode: str) -> Dict[str, Any]:
             
             final_score += points
             good_ingredients.append(f"{ingredient} (+{points:.1f})")
+
+        # E. Micronutrient Bonus
+        if ing_type == 'Micronutrient':
+             # Small flat bonus for vitamins (don't decay weight as heavily)
+             final_score += 5.0
+             good_ingredients.append(f"{ingredient} (Essential)")
 
         # B. Bloat Penalties (Universal)
         if bloat_risk >= 5:
