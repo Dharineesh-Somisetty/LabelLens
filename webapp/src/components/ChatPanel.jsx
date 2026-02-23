@@ -51,27 +51,29 @@ const ChatPanel = ({ sessionId, productName }) => {
         return (
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-glow transition-all text-2xl"
+                className="fixed bottom-6 right-6 z-50 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-glow transition-all"
                 title="Chat about this product"
             >
-                💬
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                </svg>
             </button>
         );
     }
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 w-96 max-h-[32rem] flex flex-col glass-strong shadow-2xl rounded-2xl overflow-hidden animate-slide-up">
+        <div className="fixed bottom-6 right-6 z-50 w-96 max-h-[32rem] flex flex-col bg-white border border-gray-200 shadow-xl rounded-2xl overflow-hidden animate-slide-up">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary-600 to-accent-600">
+            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600">
                 <div>
                     <h3 className="text-white font-bold text-sm">LabelLens Chat</h3>
                     <p className="text-white/70 text-xs truncate max-w-[14rem]">{productName || 'Current product'}</p>
                 </div>
-                <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white text-lg">✕</button>
+                <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white text-lg">&#x2715;</button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar min-h-[12rem]">
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar min-h-[12rem] bg-gray-50">
                 {messages.length === 0 && (
                     <p className="text-gray-400 text-sm text-center mt-8">
                         Ask anything about this product's ingredients.
@@ -82,8 +84,8 @@ const ChatPanel = ({ sessionId, productName }) => {
                         <div
                             className={`max-w-[80%] rounded-xl px-3 py-2 text-sm whitespace-pre-wrap ${
                                 m.role === 'user'
-                                    ? 'bg-primary-600 text-white'
-                                    : 'bg-white/10 text-gray-200'
+                                    ? 'bg-indigo-500 text-white'
+                                    : 'bg-white border border-gray-100 text-gray-700'
                             }`}
                         >
                             {m.content}
@@ -92,8 +94,8 @@ const ChatPanel = ({ sessionId, productName }) => {
                 ))}
                 {loading && (
                     <div className="flex justify-start">
-                        <div className="bg-white/10 rounded-xl px-3 py-2 text-sm text-gray-400 animate-pulse">
-                            Thinking…
+                        <div className="bg-white border border-gray-100 rounded-xl px-3 py-2 text-sm text-gray-400 animate-pulse">
+                            Thinking...
                         </div>
                     </div>
                 )}
@@ -101,24 +103,26 @@ const ChatPanel = ({ sessionId, productName }) => {
             </div>
 
             {/* Disclaimer */}
-            <p className="text-[10px] text-gray-500 text-center px-2">Educational only; not medical advice.</p>
+            <p className="text-[10px] text-gray-400 text-center px-2 py-1 bg-white">Educational only; not medical advice.</p>
 
             {/* Input */}
-            <div className="flex items-center gap-2 p-2 border-t border-white/10">
+            <div className="flex items-center gap-2 p-2 border-t border-gray-100 bg-white">
                 <input
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Ask about this product…"
-                    className="flex-1 px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-primary-500"
+                    placeholder="Ask about this product..."
+                    className="flex-1 px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:border-indigo-400"
                     disabled={loading}
                 />
                 <button
                     onClick={handleSend}
                     disabled={loading || !input.trim()}
-                    className="px-3 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors"
+                    className="px-3 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors"
                 >
-                    ➤
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                    </svg>
                 </button>
             </div>
         </div>

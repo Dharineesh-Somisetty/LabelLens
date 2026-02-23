@@ -4,7 +4,6 @@ const ScoreGauge = ({ score, verdict }) => {
     const [animatedScore, setAnimatedScore] = useState(0);
 
     useEffect(() => {
-        // Animate score from 0 to actual score
         const duration = 1500;
         const steps = 60;
         const increment = score / steps;
@@ -23,49 +22,25 @@ const ScoreGauge = ({ score, verdict }) => {
         return () => clearInterval(timer);
     }, [score]);
 
-    // Determine color based on score
+    // Color based on score
     const getScoreColor = (s) => {
-        if (s >= 80) return { from: '#10b981', to: '#059669', text: 'text-success-400' }; // Green
-        if (s >= 50) return { from: '#fbbf24', to: '#f59e0b', text: 'text-warning' }; // Yellow
-        if (s >= 30) return { from: '#fb923c', to: '#f97316', text: 'text-warning-dark' }; // Orange
-        return { from: '#ef4444', to: '#dc2626', text: 'text-danger' }; // Red
+        if (s >= 80) return { from: '#10b981', to: '#34d399', text: 'text-emerald-600', label: 'Excellent' };
+        if (s >= 60) return { from: '#6366f1', to: '#818cf8', text: 'text-indigo-600', label: 'Good' };
+        if (s >= 40) return { from: '#f59e0b', to: '#fbbf24', text: 'text-amber-600', label: 'Fair' };
+        if (s >= 25) return { from: '#f97316', to: '#fb923c', text: 'text-orange-600', label: 'Poor' };
+        return { from: '#ef4444', to: '#f87171', text: 'text-red-600', label: 'Bad' };
     };
 
     const colors = getScoreColor(score);
-    const circumference = 2 * Math.PI * 70; // radius = 70
-    const strokeDashoffset = circumference - (animatedScore / 100) * circumference;
+
+    // Full circle gauge using strokeDasharray/strokeDashoffset
+    const r = 70;
+    const circumference = 2 * Math.PI * r;
+    const offset = circumference - (animatedScore / 100) * circumference;
 
     return (
-        <div className="relative w-56 h-56 mx-auto animate-fade-in">
-            {/* SVG Circle Gauge */}
-            <svg className="transform -rotate-90 w-full h-full" viewBox="0 0 160 160">
-                {/* Background Circle */}
-                <circle
-                    cx="80"
-                    cy="80"
-                    r="70"
-                    stroke="rgba(255, 255, 255, 0.1)"
-                    strokeWidth="12"
-                    fill="none"
-                />
-
-                {/* Animated Progress Circle */}
-                <circle
-                    cx="80"
-                    cy="80"
-                    r="70"
-                    stroke={`url(#scoreGradient)`}
-                    strokeWidth="12"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeDasharray={circumference}
-                    strokeDashoffset={strokeDashoffset}
-                    className="transition-all duration-1000 ease-out"
-                    style={{
-                        filter: 'drop-shadow(0 0 8px rgba(0, 164, 85, 0.6))'
-                    }}
-                />
-
+        <div className="relative w-48 h-48 mx-auto animate-fade-in">
+            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 160 160">
                 {/* Gradient Definition */}
                 <defs>
                     <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -73,14 +48,44 @@ const ScoreGauge = ({ score, verdict }) => {
                         <stop offset="100%" stopColor={colors.to} />
                     </linearGradient>
                 </defs>
+
+                {/* Background circle */}
+                <circle
+                    cx="80"
+                    cy="80"
+                    r={r}
+                    stroke="#e5e7eb"
+                    strokeWidth="12"
+                    fill="none"
+                />
+
+                {/* Progress circle */}
+                <circle
+                    cx="80"
+                    cy="80"
+                    r={r}
+                    stroke="url(#scoreGradient)"
+                    strokeWidth="12"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={offset}
+                    className="transition-all duration-1000 ease-out"
+                    style={{
+                        filter: `drop-shadow(0 0 6px ${colors.from}66)`
+                    }}
+                />
             </svg>
 
-            {/* Score Text in Center */}
+            {/* Score text centered */}
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <div className={`text-5xl font-bold ${colors.text}`}>
+                <div className={`text-4xl font-bold ${colors.text}`}>
                     {Math.round(animatedScore)}
                 </div>
-                <div className="text-sm text-gray-400 mt-1">/ 100</div>
+                <div className="text-sm text-gray-400 font-normal -mt-0.5">/100</div>
+                <div className="text-sm text-gray-500 font-medium mt-1">
+                    {colors.label}
+                </div>
             </div>
         </div>
     );
