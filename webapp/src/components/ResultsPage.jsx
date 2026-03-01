@@ -4,31 +4,14 @@ import ScoreGauge from './ScoreGauge';
 import NutritionStatusBadge from './NutritionStatusBadge';
 import Sparkline from './Sparkline';
 
-/* ── severity helpers (light theme) ────────────── */
+/* -- severity helpers (light theme) ------------ */
 const severityColor = {
     high: 'border-red-400 bg-red-50 text-red-700',
     warn: 'border-amber-400 bg-amber-50 text-amber-700',
     info: 'border-indigo-400 bg-indigo-50 text-indigo-700',
 };
 
-/* ── processing badge colors (light theme) ─── */
-const badgeStyle = {
-    minimally_processed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    processed: 'bg-amber-50 text-amber-700 border-amber-200',
-    upf_signals: 'bg-red-50 text-red-700 border-red-200',
-};
-const badgeLabel = {
-    minimally_processed: 'Minimally Processed',
-    processed: 'Processed',
-    upf_signals: 'UPF Signals Detected',
-};
-const badgeIcon = {
-    minimally_processed: '🌿',
-    processed: '🔄',
-    upf_signals: '⚠️',
-};
-
-/* ── grade pill color (light theme) ────────────── */
+/* -- grade pill color (light theme) ------------ */
 const gradeColor = {
     A: 'bg-emerald-50 text-emerald-700 border-emerald-200',
     B: 'bg-emerald-50 text-emerald-600 border-emerald-200',
@@ -37,7 +20,7 @@ const gradeColor = {
     F: 'bg-red-50 text-red-700 border-red-200',
 };
 
-/* ── derive nutrition status from existing data ── */
+/* -- derive nutrition status from existing data -- */
 const deriveNutritionStatus = (product, product_score, nutrition) => {
     const conf = product_score?.nutrition_confidence;
     if (conf === 'high' && product?.barcode) return 'verified_barcode';
@@ -45,7 +28,48 @@ const deriveNutritionStatus = (product, product_score, nutrition) => {
     return 'not_detected';
 };
 
-/* ── Segmented toggle pill component ─────────────── */
+/* -- processing status helper (human-readable) -- */
+const processingStatusFromScore = (score, upfSignalsPresent) => {
+    if (upfSignalsPresent) {
+        return {
+            label: 'Ultra-processed signals detected',
+            colorClass: 'bg-red-50 text-red-700 border-red-200',
+            icon: '⚠️',
+            description: 'Contains ingredients commonly associated with ultra-processed foods.',
+        };
+    }
+    if (score >= 85) {
+        return {
+            label: 'Minimally processed',
+            colorClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+            icon: '🌿',
+            description: 'Close to its natural state with minimal processing.',
+        };
+    }
+    if (score >= 60) {
+        return {
+            label: 'Moderately processed',
+            colorClass: 'bg-amber-50 text-amber-700 border-amber-200',
+            icon: '🔄',
+            description: 'Has undergone moderate processing.',
+        };
+    }
+    return {
+        label: 'Highly processed',
+        colorClass: 'bg-red-50 text-red-700 border-red-200',
+        icon: '⚠️',
+        description: 'Has undergone significant processing.',
+    };
+};
+
+/* -- fallback badge maps for when no score available -- */
+const fallbackBadge = {
+    minimally_processed: { label: 'Minimally Processed', colorClass: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: '🌿', description: '' },
+    processed:           { label: 'Processed',            colorClass: 'bg-amber-50 text-amber-700 border-amber-200',    icon: '🔄', description: '' },
+    upf_signals:         { label: 'UPF Signals Detected', colorClass: 'bg-red-50 text-red-700 border-red-200',          icon: '⚠️', description: '' },
+};
+
+/* -- Segmented toggle pill component ------------ */
 const ViewToggle = ({ view, onChange }) => {
     const tabs = [
         { key: 'serving', label: 'Per serving' },
@@ -94,7 +118,6 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
     /* Determine default view from backend */
     const defaultView = product_score?.primary_nutrition_view || '100g';
     const [nutritionView, setNutritionView] = useState(defaultView);
-    const [showChat, setShowChat] = useState(false);
 
     /* Portion info */
     const portionInfo = product_score?.portion_info;
@@ -104,7 +127,6 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
     const nutScore100g = product_score?.nutrition_score_100g;
     const nutScoreServing = product_score?.nutrition_score_serving;
     const hasBothViews = nutScore100g != null && nutScoreServing != null;
-    const hasAnyDualView = nutScore100g != null || nutScoreServing != null;
 
     /* Active view score */
     const activeNutScore = nutritionView === 'serving' ? nutScoreServing : nutScore100g;
@@ -119,12 +141,19 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
     /* Resolve split scoring objects */
     const nutScoreObj  = product_score?.nutrition_score;
     const procObj      = product_score?.processing;
-    const finalObj     = product_score?.final_score;
-    const procBadge    = procObj || product_score?.processing_badge;  // backward compat
+    const procBadge    = procObj || product_score?.processing_badge;
     const procLevel    = procBadge?.level;
     const procScore    = procObj?.processing_score;
     const procSignals  = procBadge?.signals ?? [];
     const procDetails  = procObj?.details ?? [];
+
+    /* Processing status (human-readable) */
+    const upfSignalsPresent = procLevel === 'upf_signals' || procSignals.length > 0;
+    const processingStatus = procScore != null
+        ? processingStatusFromScore(procScore, upfSignalsPresent)
+        : procLevel
+            ? (fallbackBadge[procLevel] || fallbackBadge.processed)
+            : null;
 
     /* Build stat cards based on current view */
     const buildStatCards = () => {
@@ -153,7 +182,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
         <div className="min-h-screen bg-[#f5f7fb] text-gray-800">
             <div className="mx-auto max-w-4xl px-4 py-10 custom-scrollbar">
 
-                {/* ── Back button ──────────────────────── */}
+                {/* -- Back button ---------------------- */}
                 <button
                     onClick={onReset}
                     className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 mb-6 transition-colors"
@@ -165,9 +194,9 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                 </button>
 
                 {/* ╔══════════════════════════════════════╗
-                   ║  1 · HEADER CARD                     ║
+                   ║  1 - HEADER CARD                     ║
                    ╚══════════════════════════════════════╝ */}
-                <div className="glass-strong p-8 mb-6 text-center animate-fade-in">
+                <div className="glass-strong p-6 mb-4 text-center animate-fade-in">
                     <h1 className="text-3xl sm:text-4xl font-display font-extrabold mb-1 text-gray-900 leading-tight">
                         {product?.name || 'Product Analysis'}
                     </h1>
@@ -188,24 +217,25 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                 </div>
 
                 {/* ╔══════════════════════════════════════╗
-                   ║  2 · SCORE + STATS SECTION           ║
+                   ║  2 - SCORE + STATS (tighter grid)    ║
                    ╚══════════════════════════════════════╝ */}
                 {product_score && (
-                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 mb-6 animate-slide-up">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4 animate-slide-up">
                         {/* Score gauge card */}
-                        <div className="lg:col-span-2 glass-strong p-8 text-center">
+                        <div className="lg:col-span-5 glass-strong p-6 flex flex-col items-center justify-center">
                             <h2 className="text-lg font-bold mb-2 text-gray-700">Wellness Score</h2>
 
                             {/* View toggle */}
                             {hasBothViews && (
-                                <div className="mb-4">
+                                <div className="mb-3">
                                     <ViewToggle view={nutritionView} onChange={setNutritionView} />
                                 </div>
                             )}
 
                             <ScoreGauge score={Math.round(displayScore)} />
+
                             {/* Grade pill */}
-                            <div className="mt-4">
+                            <div className="mt-3">
                                 <span className={`inline-block px-5 py-1.5 rounded-full text-sm font-bold tracking-wide border ${gradeColor[displayGrade] || gradeColor.C}`}>
                                     Grade {displayGrade}
                                 </span>
@@ -213,7 +243,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
 
                             {/* Portion note */}
                             {isPortionSensitive && portionInfo?.note && (
-                                <p className="mt-3 text-xs text-gray-400 italic leading-relaxed max-w-xs mx-auto">
+                                <p className="mt-2 text-xs text-gray-400 italic leading-relaxed max-w-xs mx-auto text-center">
                                     {portionInfo.note}
                                     {portionInfo.typical_serving_text && (
                                         <span className="block mt-0.5 text-gray-500 not-italic font-medium">
@@ -223,38 +253,43 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                                 </p>
                             )}
 
-                            {/* Processing Badge */}
-                            {procLevel && (
-                                <div className="mt-3">
-                                    <span className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border ${badgeStyle[procLevel] || badgeStyle.processed}`}>
-                                        <span>{badgeIcon[procLevel] || '🔄'}</span>
-                                        {badgeLabel[procLevel] || 'Processed'}
+                            {/* Processing Status Badge (human-readable) */}
+                            {processingStatus && (
+                                <div className="mt-3 text-center">
+                                    <span className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border ${processingStatus.colorClass}`}>
+                                        <span>{processingStatus.icon}</span>
+                                        {processingStatus.label}
                                     </span>
+                                    {processingStatus.description && (
+                                        <p className="mt-1 text-[11px] text-gray-400 max-w-[16rem] mx-auto leading-snug">
+                                            {processingStatus.description}
+                                        </p>
+                                    )}
+                                    {procScore != null && (
+                                        <p className="mt-0.5 text-[10px] text-gray-400">
+                                            Processing score: {procScore}/100
+                                        </p>
+                                    )}
                                 </div>
                             )}
 
-                            {/* Sub-score breakdown */}
-                            {(nutScoreObj || procScore != null) && (
-                                <div className="mt-4 flex justify-center gap-5 text-xs text-gray-400">
-                                    {nutScoreObj && (
-                                        <span>Nutrition: <span className="text-gray-700 font-semibold">{nutScoreObj.score}</span>/100</span>
-                                    )}
-                                    {procScore != null && (
-                                        <span>Processing: <span className="text-gray-700 font-semibold">{procScore}</span>/100</span>
-                                    )}
+                            {/* Nutrition sub-score */}
+                            {nutScoreObj && (
+                                <div className="mt-3 flex justify-center gap-5 text-xs text-gray-400">
+                                    <span>Nutrition: <span className="text-gray-700 font-semibold">{nutScoreObj.score}</span>/100</span>
                                 </div>
                             )}
                         </div>
 
                         {/* Stats cards column */}
-                        <div className="lg:col-span-3 space-y-4">
-                            <div className="flex items-center justify-between">
+                        <div className="lg:col-span-7 flex flex-col">
+                            <div className="flex items-center justify-between mb-3">
                                 <h2 className="text-lg font-bold text-gray-700">Nutrient Stats</h2>
                                 <span className="text-xs text-gray-400">
                                     {nutritionView === 'serving' ? 'per serving' : 'per 100 g'}
                                 </span>
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-2 gap-3 flex-1">
                                 {statCards.map((c, i) => {
                                     const isWarn = typeof c.warn === 'function' && c.value != null && c.warn(c.value);
                                     return (
@@ -277,9 +312,9 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                     </div>
                 )}
 
-                {/* ── Key Factors / Penalties ─────────── */}
+                {/* -- Key Factors / Penalties ----------- */}
                 {product_score && (activeReasons.length > 0 || activePenalties.length > 0) && (
-                    <div className="glass-strong p-6 mb-6 animate-slide-up">
+                    <div className="glass-strong p-6 mb-4 animate-slide-up">
                         <div className="space-y-4 max-w-2xl mx-auto">
                             {activeReasons.length > 0 && (
                                 <div>
@@ -367,12 +402,12 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                 )}
 
                 {/* ╔══════════════════════════════════════╗
-                   ║  3 · DETAILS SECTION                 ║
+                   ║  3 - DETAILS SECTION                 ║
                    ╚══════════════════════════════════════╝ */}
 
                 {/* Personalized Summary */}
                 {personalized_summary && (
-                    <div className="glass-strong p-6 mb-6 animate-slide-up" style={{ animationDelay: '0.05s' }}>
+                    <div className="glass-strong p-6 mb-4 animate-slide-up" style={{ animationDelay: '0.05s' }}>
                         <h2 className="text-lg font-bold mb-3 text-gray-800">Personalized Summary</h2>
                         <p className="text-gray-600 leading-relaxed whitespace-pre-wrap text-sm">
                             {personalized_summary}
@@ -382,7 +417,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
 
                 {/* Nutrition per 100 g */}
                 {nutrition && (
-                    <div className="glass-strong p-6 mb-6 animate-slide-up" style={{ animationDelay: '0.08s' }}>
+                    <div className="glass-strong p-6 mb-4 animate-slide-up" style={{ animationDelay: '0.08s' }}>
                         <h2 className="text-lg font-bold mb-3 text-gray-800">Nutrition per 100 g</h2>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             {[
@@ -407,7 +442,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
 
                 {/* Flags */}
                 {flags.length > 0 && (
-                    <div className="glass-strong p-6 mb-6 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+                    <div className="glass-strong p-6 mb-4 animate-slide-up" style={{ animationDelay: '0.1s' }}>
                         <h2 className="text-lg font-bold mb-3 text-gray-800">Flags</h2>
                         <div className="space-y-3">
                             {flags.map((f, i) => (
@@ -432,7 +467,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                 )}
 
                 {/* Ingredients list */}
-                <div className="glass-strong p-6 mb-6 animate-slide-up" style={{ animationDelay: '0.12s' }}>
+                <div className="glass-strong p-6 mb-4 animate-slide-up" style={{ animationDelay: '0.12s' }}>
                     <h2 className="text-lg font-bold mb-3 text-gray-800">
                         Detected Ingredients ({ingredients.length})
                     </h2>
@@ -457,7 +492,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
 
                 {/* Umbrella Terms */}
                 {umbrella_terms.length > 0 && (
-                    <div className="glass-strong p-6 mb-6 animate-slide-up" style={{ animationDelay: '0.14s' }}>
+                    <div className="glass-strong p-6 mb-4 animate-slide-up" style={{ animationDelay: '0.14s' }}>
                         <h2 className="text-lg font-bold mb-2 text-amber-700">Umbrella Terms</h2>
                         <p className="text-gray-400 text-xs mb-2">
                             These are vague labels whose exact composition is unknown.
@@ -472,7 +507,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
 
                 {/* Allergen Statements */}
                 {allergen_statements.length > 0 && (
-                    <div className="glass-strong p-6 mb-6 animate-slide-up bg-red-50/50" style={{ animationDelay: '0.16s' }}>
+                    <div className="glass-strong p-6 mb-4 animate-slide-up bg-red-50/50" style={{ animationDelay: '0.16s' }}>
                         <h2 className="text-lg font-bold mb-2 text-red-700">Allergen Statements</h2>
                         <ul className="text-gray-600 text-sm space-y-1">
                             {allergen_statements.map((s, i) => <li key={i}>&#x2022; {s}</li>)}
@@ -482,7 +517,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
 
                 {/* Evidence */}
                 {evidence.length > 0 && (
-                    <div className="glass-strong p-6 mb-6 animate-slide-up" style={{ animationDelay: '0.18s' }}>
+                    <div className="glass-strong p-6 mb-4 animate-slide-up" style={{ animationDelay: '0.18s' }}>
                         <h2 className="text-lg font-bold mb-3 text-gray-800">Evidence & Citations</h2>
                         <div className="space-y-3 max-h-64 overflow-y-auto custom-scrollbar">
                             {evidence.map((e, i) => (
@@ -507,29 +542,19 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                     </div>
                 )}
 
-                {/* ── Disclaimer ──────────────────────── */}
-                <p className="text-center text-xs text-gray-400 mb-6">{disclaimer}</p>
+                {/* -- Disclaimer ---------------------- */}
+                <p className="text-center text-xs text-gray-400 mb-4">{disclaimer}</p>
 
-                {/* ── Action row ─────────────────────── */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pb-8">
+                {/* -- Action row (removed big chat button) -- */}
+                <div className="flex items-center justify-center pb-20">
                     <button onClick={onReset} className="btn-primary text-base px-8 py-3">
                         Scan Another Product
                     </button>
-                    <button
-                        onClick={() => setShowChat(c => !c)}
-                        className="btn-outline-brand text-base px-8 py-3"
-                    >
-                        {showChat ? 'Hide Chat' : 'Ask About This Product'}
-                    </button>
                 </div>
-
-                {/* ── Chat drawer ────────────────────── */}
-                {showChat && (
-                    <div className="animate-slide-up pb-10">
-                        <ChatPanel sessionId={session_id} productName={product?.name} />
-                    </div>
-                )}
             </div>
+
+            {/* -- Persistent Chat Launcher (always visible) -- */}
+            <ChatPanel sessionId={session_id} productName={product?.name} />
         </div>
     );
 };

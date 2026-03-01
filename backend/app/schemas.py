@@ -231,7 +231,7 @@ class ChatResponse(BaseModel):
 # Household Profile CRUD schemas
 # ──────────────────────────────────────────────
 class ProfileCreate(BaseModel):
-    name: str = "Me"
+    name: str = Field(default="Me", min_length=1, max_length=100)
     allergies: List[str] = Field(default_factory=list)
     avoid_terms: List[str] = Field(default_factory=list)
     diet_style: Optional[str] = None          # vegan | vegetarian | halal

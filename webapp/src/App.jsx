@@ -4,18 +4,21 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import ScanPage from './components/ScanPage';
 import ResultsPage from './components/ResultsPage';
+import AccountDrawer from './components/AccountDrawer';
+import ProfilesManagePage from './components/ProfilesManagePage';
 import { scanBarcode, scanLabel } from './services/api';
 
 function AppInner() {
   const { session, user, loading: authLoading, signOut } = useAuth();
   const [authView, setAuthView] = useState('login'); // 'login' | 'signup'
 
-  const [view, setView] = useState('scan');       // 'scan' | 'loading' | 'results'
+  const [view, setView] = useState('scan');       // 'scan' | 'loading' | 'results' | 'profiles'
   const [analysisResult, setAnalysisResult] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [lastBarcode, setLastBarcode] = useState('');
   const [scoredForName, setScoredForName] = useState('');
+  const [showAccountDrawer, setShowAccountDrawer] = useState(false);
 
   // Show a simple spinner while Supabase checks the session
   if (authLoading) {
@@ -26,7 +29,7 @@ function AppInner() {
     );
   }
 
-  // Not logged in → show auth pages
+  // Not logged in -> show auth pages
   if (!session) {
     if (authView === 'signup') {
       return <Signup onSwitch={() => setAuthView('login')} />;
@@ -73,16 +76,34 @@ function AppInner() {
 
   return (
     <div className="min-h-screen bg-[#f5f7fb]">
-      {/* Top bar with user info + sign out */}
+      {/* Top bar with user info + menu */}
       <div className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-100 px-4 py-2 flex items-center justify-between">
-        <span className="text-sm text-gray-500 truncate max-w-[200px]">
-          {user?.email}
-        </span>
+        {/* Left: go back to home if not on scan */}
+        <div className="flex items-center gap-2 min-w-0">
+          {view !== 'scan' && view !== 'loading' && (
+            <button
+              onClick={() => { if (view === 'profiles') setView('scan'); }}
+              className="text-sm text-gray-500 hover:text-indigo-600 font-medium truncate max-w-[200px]"
+            >
+              LabelLens
+            </button>
+          )}
+          {(view === 'scan' || view === 'loading') && (
+            <span className="text-sm text-gray-500 truncate max-w-[200px]">
+              {user?.email}
+            </span>
+          )}
+        </div>
+
+        {/* Right: menu button */}
         <button
-          onClick={signOut}
-          className="text-xs text-gray-400 hover:text-red-500 font-medium transition"
+          onClick={() => setShowAccountDrawer(true)}
+          className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500 hover:text-gray-700"
+          title="Account menu"
         >
-          Sign Out
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
         </button>
       </div>
 
@@ -114,6 +135,20 @@ function AppInner() {
       {view === 'results' && analysisResult && (
         <ResultsPage data={analysisResult} onReset={handleReset} scoredForName={scoredForName} />
       )}
+
+      {view === 'profiles' && (
+        <ProfilesManagePage onBack={() => setView('scan')} />
+      )}
+
+      {/* Account drawer */}
+      {showAccountDrawer && (
+        <AccountDrawer
+          email={user?.email}
+          onClose={() => setShowAccountDrawer(false)}
+          onManageProfiles={() => setView('profiles')}
+          onSignOut={signOut}
+        />
+      )}
     </div>
   );
 }
@@ -127,4 +162,3 @@ function App() {
 }
 
 export default App;
-

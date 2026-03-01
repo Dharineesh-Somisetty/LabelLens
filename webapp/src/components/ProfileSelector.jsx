@@ -7,12 +7,12 @@
  * - "+ Add" button respects plan limits
  */
 import { useState, useEffect, useCallback } from 'react';
-import { listProfiles, createProfile, updateProfile, deleteProfile, setDefaultProfile } from '../services/profileApi';
+import { listProfiles, createProfile, updateProfile, deleteProfile } from '../services/profileApi';
 import { useAuth } from '../context/AuthContext';
 import EditProfileModal from './EditProfileModal';
 
 export default function ProfileSelector({ selectedId, onSelect }) {
-  const { loading: authLoading } = useAuth();
+  const { loading: authLoading, signOut } = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editTarget, setEditTarget] = useState(null);    // null | {} (new) | profile obj
@@ -29,14 +29,18 @@ export default function ProfileSelector({ selectedId, onSelect }) {
         onSelect(def.id, def.name);
       }
     } catch (err) {
-      // If 401 just silently ignore (user not logged in when optional)
+      if (err.response?.status === 401) {
+        setError('Session expired. Please sign in again.');
+        signOut();
+        return;
+      }
       if (err.response?.status !== 401) {
         setError('Could not load profiles');
       }
     } finally {
       setLoading(false);
     }
-  }, [selectedId, onSelect]);
+  }, [selectedId, onSelect, signOut]);
 
   // Wait for auth session to restore before fetching profiles
   useEffect(() => {
@@ -53,8 +57,24 @@ export default function ProfileSelector({ selectedId, onSelect }) {
       }
       setShowModal(false);
       setEditTarget(null);
+      setError('');
       await refresh();
     } catch (err) {
+      const status = err.response?.status;
+      if (status === 401) {
+        setError('Session expired. Please sign in again.');
+        signOut();
+        return;
+      }
+      if (status === 403) {
+        setError('Upgrade to add more profiles.');
+        return;
+      }
+      if (status === 422) {
+        const detail = err.response?.data?.detail;
+        setError(typeof detail === 'string' ? detail : 'Please check your input (name is required).');
+        return;
+      }
       const msg = err.response?.data?.detail || 'Could not save profile';
       setError(msg);
     }
@@ -62,13 +82,22 @@ export default function ProfileSelector({ selectedId, onSelect }) {
 
   const handleDelete = async (id) => {
     if (!confirm('Delete this profile?')) return;
-    await deleteProfile(id);
-    await refresh();
-    // If we deleted the selected profile, deselect
-    if (selectedId === id) {
-      const remaining = profiles.filter((p) => p.id !== id);
-      if (remaining.length > 0) onSelect(remaining[0].id, remaining[0].name);
-      else onSelect(null, '');
+    try {
+      await deleteProfile(id);
+      await refresh();
+      // If we deleted the selected profile, deselect
+      if (selectedId === id) {
+        const remaining = profiles.filter((p) => p.id !== id);
+        if (remaining.length > 0) onSelect(remaining[0].id, remaining[0].name);
+        else onSelect(null, '');
+      }
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setError('Session expired. Please sign in again.');
+        signOut();
+        return;
+      }
+      setError(err.response?.data?.detail || 'Could not delete profile');
     }
   };
 

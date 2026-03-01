@@ -23,6 +23,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
     (profile?.avoid_terms || []).join(', ')
   );
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     // Prevent body scroll when modal is open
@@ -32,9 +33,18 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
+    // Client-side validation
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      setError('Name is required.');
+      return;
+    }
+
     setSaving(true);
     const data = {
-      name: name.trim() || 'Me',
+      name: trimmedName,
       diet_style: dietStyle || null,
       allergies: allergiesText
         .split(',')
@@ -45,8 +55,14 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
         .map((s) => s.trim().toLowerCase())
         .filter(Boolean),
     };
-    await onSave(data, profile?.id);
-    setSaving(false);
+
+    try {
+      await onSave(data, profile?.id);
+    } catch {
+      // Error is handled by parent (ProfileSelector)
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -65,6 +81,13 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
         <h2 className="text-lg font-bold text-gray-800">
           {isNew ? 'Add Profile' : 'Edit Profile'}
         </h2>
+
+        {/* Error */}
+        {error && (
+          <p className="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-1.5">
+            {error}
+          </p>
+        )}
 
         {/* Name */}
         <div>
@@ -143,8 +166,11 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-sm font-semibold hover:shadow-lg transition disabled:opacity-50"
+            className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-sm font-semibold hover:shadow-lg transition disabled:opacity-50 flex items-center justify-center gap-2"
           >
+            {saving && (
+              <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+            )}
             {saving ? 'Saving...' : 'Save'}
           </button>
         </div>

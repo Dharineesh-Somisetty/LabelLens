@@ -30,7 +30,7 @@ const ChatPanel = ({ sessionId, productName }) => {
                 citations: res.citations_used || [],
             };
             setMessages(prev => [...prev, assistantMsg]);
-        } catch (err) {
+        } catch {
             setMessages(prev => [
                 ...prev,
                 { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' },
@@ -47,22 +47,33 @@ const ChatPanel = ({ sessionId, productName }) => {
         }
     };
 
+    const disabled = !sessionId;
+
+    /* Floating launcher (always visible) */
     if (!isOpen) {
         return (
-            <button
-                onClick={() => setIsOpen(true)}
-                className="fixed bottom-6 right-6 z-50 bg-indigo-500 hover:bg-indigo-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-glow transition-all"
-                title="Chat about this product"
-            >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-                </svg>
-            </button>
+            <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-2">
+                {/* Pill label above icon */}
+                <span className="bg-white border border-gray-200 shadow-md text-gray-600 text-xs font-medium px-3 py-1.5 rounded-full whitespace-nowrap">
+                    Ask about this product
+                </span>
+                <button
+                    onClick={() => !disabled && setIsOpen(true)}
+                    disabled={disabled}
+                    className="bg-indigo-500 hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-glow transition-all"
+                    title={disabled ? 'Scan a product first' : 'Chat about this product'}
+                >
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+                    </svg>
+                </button>
+            </div>
         );
     }
 
+    /* Open chat panel */
     return (
-        <div className="fixed bottom-6 right-6 z-50 w-96 max-h-[32rem] flex flex-col bg-white border border-gray-200 shadow-xl rounded-2xl overflow-hidden animate-slide-up">
+        <div className="fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-2rem)] max-h-[32rem] flex flex-col bg-white border border-gray-200 shadow-xl rounded-2xl overflow-hidden animate-slide-up">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600">
                 <div>
