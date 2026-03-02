@@ -23,24 +23,25 @@ export default function ProfileSelector({ selectedId, onSelect }) {
     try {
       const data = await listProfiles();
       setProfiles(data);
+      setError('');
       // Auto-select default profile if nothing selected
       if (!selectedId && data.length > 0) {
         const def = data.find((p) => p.is_default) || data[0];
         onSelect(def.id, def.name);
       }
     } catch (err) {
-      if (err.response?.status === 401) {
-        setError('Session expired. Please sign in again.');
-        signOut();
-        return;
-      }
-      if (err.response?.status !== 401) {
+      const status = err.response?.status;
+      if (status === 401) {
+        // Don't force sign-out here – the token may still be loading.
+        // Show a retry prompt instead; the user can sign out from the menu if truly expired.
+        setError('Could not verify session. Tap to retry.');
+      } else {
         setError('Could not load profiles');
       }
     } finally {
       setLoading(false);
     }
-  }, [selectedId, onSelect, signOut]);
+  }, [selectedId, onSelect]);
 
   // Wait for auth session to restore before fetching profiles
   useEffect(() => {
@@ -128,10 +129,16 @@ export default function ProfileSelector({ selectedId, onSelect }) {
     <div className="space-y-2">
       {/* Error banner */}
       {error && (
-        <p className="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-1.5">
-          {error}
-          <button onClick={() => setError('')} className="ml-2 text-red-400">&#x2715;</button>
-        </p>
+        <div className="flex items-center gap-2 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-1.5">
+          <span className="flex-1">{error}</span>
+          <button
+            onClick={() => { setError(''); setLoading(true); refresh(); }}
+            className="text-indigo-500 font-medium hover:underline shrink-0"
+          >
+            Retry
+          </button>
+          <button onClick={() => setError('')} className="text-red-400">&#x2715;</button>
+        </div>
       )}
 
       {/* Profile pills */}

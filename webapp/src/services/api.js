@@ -12,16 +12,25 @@ const api = axios.create({
     headers: { 'Content-Type': 'application/json' },
 });
 
+// ── Synchronous session reference ──────────────────────────────
+// onAuthStateChange fires before React processes the resulting setState,
+// so _session is always current by the time any component useEffect
+// triggers an API call after login – no async race condition.
+let _session = null;
+
+supabase.auth.getSession().then(({ data }) => {
+    _session = data.session;
+});
+
+supabase.auth.onAuthStateChange((_event, session) => {
+    _session = session;
+});
+
 // ── JWT interceptor ────────────────────────────────────────────
-// Automatically attach Supabase access token to every request.
-api.interceptors.request.use(async (config) => {
-    try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.access_token) {
-            config.headers.Authorization = `Bearer ${session.access_token}`;
-        }
-    } catch {
-        // No session – continue without auth header
+// Synchronously attach the Supabase access token to every request.
+api.interceptors.request.use((config) => {
+    if (_session?.access_token) {
+        config.headers.Authorization = `Bearer ${_session.access_token}`;
     }
     return config;
 });
@@ -74,4 +83,3 @@ export const chat = async (sessionId, message, chatHistory = []) => {
 };
 
 export default api;
-
