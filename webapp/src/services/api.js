@@ -13,9 +13,7 @@ const api = axios.create({
 });
 
 // ── Synchronous session reference ──────────────────────────────
-// onAuthStateChange fires before React processes the resulting setState,
-// so _session is always current by the time any component useEffect
-// triggers an API call after login – no async race condition.
+// Updated eagerly so the request interceptor can run synchronously.
 let _session = null;
 
 supabase.auth.getSession().then(({ data }) => {
@@ -26,14 +24,38 @@ supabase.auth.onAuthStateChange((_event, session) => {
     _session = session;
 });
 
-// ── JWT interceptor ────────────────────────────────────────────
-// Synchronously attach the Supabase access token to every request.
+// ── Request interceptor – attach token ─────────────────────────
 api.interceptors.request.use((config) => {
     if (_session?.access_token) {
         config.headers.Authorization = `Bearer ${_session.access_token}`;
     }
     return config;
 });
+
+// ── Response interceptor – retry once on 401 ───────────────────
+// Supabase v2 fires onAuthStateChange asynchronously, so _session may
+// not be populated yet when the first request fires after login.
+// On a 401: force-refresh the session and replay the request once.
+api.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        const original = error.config;
+        if (error.response?.status === 401 && !original._retried) {
+            original._retried = true;
+            try {
+                const { data } = await supabase.auth.getSession();
+                _session = data.session;
+                if (_session?.access_token) {
+                    original.headers.Authorization = `Bearer ${_session.access_token}`;
+                    return api(original);
+                }
+            } catch {
+                // Session refresh failed – fall through and reject
+            }
+        }
+        return Promise.reject(error);
+    }
+);
 
 /**
  * Scan a barcode → full analysis result.

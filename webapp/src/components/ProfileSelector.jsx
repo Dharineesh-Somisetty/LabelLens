@@ -1,10 +1,5 @@
 /**
  * ProfileSelector – horizontal pill bar showing household profiles.
- *
- * Features:
- * - Tap a profile pill to select it (used for scoring personalisation)
- * - Long-press or tap edit icon to open EditProfileModal
- * - "+ Add" button respects plan limits
  */
 import { useState, useEffect, useCallback } from 'react';
 import { listProfiles, createProfile, updateProfile, deleteProfile } from '../services/profileApi';
@@ -12,10 +7,10 @@ import { useAuth } from '../context/AuthContext';
 import EditProfileModal from './EditProfileModal';
 
 export default function ProfileSelector({ selectedId, onSelect }) {
-  const { loading: authLoading, signOut } = useAuth();
+  const { session, loading: authLoading } = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [editTarget, setEditTarget] = useState(null);    // null | {} (new) | profile obj
+  const [editTarget, setEditTarget] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState('');
 
@@ -24,29 +19,23 @@ export default function ProfileSelector({ selectedId, onSelect }) {
       const data = await listProfiles();
       setProfiles(data);
       setError('');
-      // Auto-select default profile if nothing selected
       if (!selectedId && data.length > 0) {
         const def = data.find((p) => p.is_default) || data[0];
         onSelect(def.id, def.name);
       }
     } catch (err) {
-      const status = err.response?.status;
-      if (status === 401) {
-        // Don't force sign-out here – the token may still be loading.
-        // Show a retry prompt instead; the user can sign out from the menu if truly expired.
-        setError('Could not verify session. Tap to retry.');
-      } else {
-        setError('Could not load profiles');
-      }
+      // Never call signOut here – a 401 may be a transient race condition.
+      // The response interceptor in api.js already retries once automatically.
+      setError('Could not load profiles');
     } finally {
       setLoading(false);
     }
   }, [selectedId, onSelect]);
 
-  // Wait for auth session to restore before fetching profiles
+  // Only fetch once we have a confirmed session (avoids firing before token is ready)
   useEffect(() => {
-    if (!authLoading) refresh();
-  }, [authLoading, refresh]);
+    if (!authLoading && session) refresh();
+  }, [authLoading, session, refresh]);
 
   const handleSave = async (data, profileId) => {
     try {
@@ -62,11 +51,6 @@ export default function ProfileSelector({ selectedId, onSelect }) {
       await refresh();
     } catch (err) {
       const status = err.response?.status;
-      if (status === 401) {
-        setError('Session expired. Please sign in again.');
-        signOut();
-        return;
-      }
       if (status === 403) {
         setError('Upgrade to add more profiles.');
         return;
@@ -76,8 +60,7 @@ export default function ProfileSelector({ selectedId, onSelect }) {
         setError(typeof detail === 'string' ? detail : 'Please check your input (name is required).');
         return;
       }
-      const msg = err.response?.data?.detail || 'Could not save profile';
-      setError(msg);
+      setError(err.response?.data?.detail || 'Could not save profile');
     }
   };
 
@@ -86,18 +69,12 @@ export default function ProfileSelector({ selectedId, onSelect }) {
     try {
       await deleteProfile(id);
       await refresh();
-      // If we deleted the selected profile, deselect
       if (selectedId === id) {
         const remaining = profiles.filter((p) => p.id !== id);
         if (remaining.length > 0) onSelect(remaining[0].id, remaining[0].name);
         else onSelect(null, '');
       }
     } catch (err) {
-      if (err.response?.status === 401) {
-        setError('Session expired. Please sign in again.');
-        signOut();
-        return;
-      }
       setError(err.response?.data?.detail || 'Could not delete profile');
     }
   };
@@ -114,6 +91,13 @@ export default function ProfileSelector({ selectedId, onSelect }) {
   if (profiles.length === 0 && !showModal) {
     return (
       <div className="space-y-2">
+        {error && (
+          <div className="flex items-center gap-2 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-1.5">
+            <span className="flex-1">{error}</span>
+            <button onClick={() => { setError(''); setLoading(true); refresh(); }} className="text-indigo-500 font-medium hover:underline shrink-0">Retry</button>
+            <button onClick={() => setError('')} className="text-red-400">&#x2715;</button>
+          </div>
+        )}
         <p className="text-xs text-gray-400">No profiles yet.</p>
         <button
           onClick={() => { setEditTarget({}); setShowModal(true); }}
@@ -121,6 +105,13 @@ export default function ProfileSelector({ selectedId, onSelect }) {
         >
           + Create your first profile
         </button>
+        {showModal && (
+          <EditProfileModal
+            profile={null}
+            onSave={handleSave}
+            onClose={() => { setShowModal(false); setEditTarget(null); }}
+          />
+        )}
       </div>
     );
   }
@@ -154,11 +145,8 @@ export default function ProfileSelector({ selectedId, onSelect }) {
               }`}
             >
               {p.name}
-              {p.is_default && (
-                <span className="ml-1 text-[10px] text-indigo-400">★</span>
-              )}
+              {p.is_default && <span className="ml-1 text-[10px] text-indigo-400">★</span>}
             </button>
-            {/* Edit/delete on hover */}
             <div className="opacity-0 group-hover:opacity-100 flex items-center ml-1 transition-opacity">
               <button
                 onClick={() => { setEditTarget(p); setShowModal(true); }}
@@ -180,7 +168,6 @@ export default function ProfileSelector({ selectedId, onSelect }) {
           </div>
         ))}
 
-        {/* Add button */}
         <button
           onClick={() => { setEditTarget({}); setShowModal(true); }}
           className="flex-shrink-0 px-3 py-1.5 rounded-full border border-dashed border-gray-300 text-gray-400 text-sm hover:border-indigo-300 hover:text-indigo-500 transition"
@@ -189,7 +176,6 @@ export default function ProfileSelector({ selectedId, onSelect }) {
         </button>
       </div>
 
-      {/* Edit modal */}
       {showModal && (
         <EditProfileModal
           profile={editTarget?.id ? editTarget : null}

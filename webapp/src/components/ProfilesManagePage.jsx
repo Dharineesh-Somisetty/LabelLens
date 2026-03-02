@@ -1,7 +1,6 @@
 /**
  * ProfilesManagePage – full profile management screen.
  * Accessible from the Account drawer → "Manage Profiles".
- * Lists all profiles with add/edit/delete and set-default.
  */
 import { useState, useEffect, useCallback } from 'react';
 import { listProfiles, createProfile, updateProfile, deleteProfile, setDefaultProfile } from '../services/profileApi';
@@ -9,7 +8,7 @@ import { useAuth } from '../context/AuthContext';
 import EditProfileModal from './EditProfileModal';
 
 export default function ProfilesManagePage({ onBack }) {
-  const { signOut } = useAuth();
+  const { session } = useAuth();
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editTarget, setEditTarget] = useState(null);
@@ -23,20 +22,17 @@ export default function ProfilesManagePage({ onBack }) {
       setProfiles(data);
       setError('');
     } catch (err) {
-      if (err.response?.status === 401) {
-        setError('Session expired. Please sign in again.');
-        signOut();
-        return;
-      }
+      // Never signOut automatically – a 401 is retried by the api.js interceptor.
+      // If it still fails, show an error so the user can retry manually.
       setError('Could not load profiles.');
     } finally {
       setLoading(false);
     }
-  }, [signOut]);
+  }, []);
 
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    if (session) refresh();
+  }, [session, refresh]);
 
   const handleSave = async (data, profileId) => {
     try {
@@ -51,11 +47,6 @@ export default function ProfilesManagePage({ onBack }) {
       await refresh();
     } catch (err) {
       const status = err.response?.status;
-      if (status === 401) {
-        setError('Session expired. Please sign in again.');
-        signOut();
-        return;
-      }
       if (status === 403) {
         setError('Upgrade to add more profiles.');
         return;
@@ -75,10 +66,6 @@ export default function ProfilesManagePage({ onBack }) {
       await deleteProfile(id);
       await refresh();
     } catch (err) {
-      if (err.response?.status === 401) {
-        signOut();
-        return;
-      }
       setError(err.response?.data?.detail || 'Could not delete profile.');
     }
   };
@@ -88,10 +75,6 @@ export default function ProfilesManagePage({ onBack }) {
       await setDefaultProfile(id);
       await refresh();
     } catch (err) {
-      if (err.response?.status === 401) {
-        signOut();
-        return;
-      }
       setError(err.response?.data?.detail || 'Could not set default.');
     }
   };
@@ -123,7 +106,10 @@ export default function ProfilesManagePage({ onBack }) {
         {error && (
           <div className="mb-4 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2 flex items-center justify-between">
             <span>{error}</span>
-            <button onClick={() => setError('')} className="text-red-400 ml-2">&#x2715;</button>
+            <div className="flex items-center gap-2 ml-2">
+              <button onClick={() => { setError(''); refresh(); }} className="text-indigo-500 font-medium hover:underline">Retry</button>
+              <button onClick={() => setError('')} className="text-red-400">&#x2715;</button>
+            </div>
           </div>
         )}
 
@@ -213,15 +199,13 @@ export default function ProfilesManagePage({ onBack }) {
           </div>
         )}
 
-        {/* No profiles */}
-        {!loading && profiles.length === 0 && (
+        {!loading && profiles.length === 0 && !error && (
           <div className="text-center py-10">
             <p className="text-gray-400 text-sm mb-3">No profiles yet. Create one to personalize your scans.</p>
           </div>
         )}
       </div>
 
-      {/* Edit modal */}
       {showModal && (
         <EditProfileModal
           profile={editTarget?.id ? editTarget : null}
