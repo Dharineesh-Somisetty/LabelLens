@@ -69,6 +69,14 @@ app = FastAPI(title="LabelLens API", version="2.0.0")
 
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
 
+# ── Auth config startup check ────────────────────────────────────
+logger.info(
+    "Auth config loaded: jwks=%s issuer=%s aud=%s",
+    bool(os.getenv("SUPABASE_JWKS_URL")),
+    bool(os.getenv("SUPABASE_ISSUER")),
+    bool(os.getenv("SUPABASE_AUDIENCE")),
+)
+
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):

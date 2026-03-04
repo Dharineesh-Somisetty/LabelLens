@@ -1,13 +1,13 @@
 """
-Supabase JWT verification for FastAPI (HS256).
+Supabase JWT verification for FastAPI (ES256 via JWKS).
 
-Uses SUPABASE_JWT_SECRET (from Supabase Project Settings -> API -> JWT Secret).
-No JWKS fetch needed.
+Uses SUPABASE_JWKS_URL to fetch public keys and verify tokens.
+No shared secret needed.
 
 Env vars required:
-  SUPABASE_JWT_SECRET – Supabase JWT secret
-  SUPABASE_ISSUER     – https://<project>.supabase.co/auth/v1
-  SUPABASE_AUDIENCE   – authenticated
+  SUPABASE_JWKS_URL  – https://<project>.supabase.co/auth/v1/.well-known/jwks.json
+  SUPABASE_ISSUER    – https://<project>.supabase.co/auth/v1
+  SUPABASE_AUDIENCE  – authenticated
 """
 
 from __future__ import annotations
@@ -19,9 +19,25 @@ from fastapi import HTTPException, Request
 
 logger = logging.getLogger("labellens.auth")
 
-SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "")
+SUPABASE_JWKS_URL = os.getenv("SUPABASE_JWKS_URL", "")
 SUPABASE_ISSUER = os.getenv("SUPABASE_ISSUER", "")
 SUPABASE_AUDIENCE = os.getenv("SUPABASE_AUDIENCE", "authenticated")
+
+# Lazily initialised PyJWKClient (cached; thread-safe)
+_jwks_client = None
+
+
+def _get_jwks_client():
+    global _jwks_client
+    if _jwks_client is None:
+        try:
+            from jwt import PyJWKClient
+        except ImportError as exc:
+            raise HTTPException(500, f"Missing dependency: {exc}")
+        if not SUPABASE_JWKS_URL:
+            raise HTTPException(503, "Auth not configured (SUPABASE_JWKS_URL missing)")
+        _jwks_client = PyJWKClient(SUPABASE_JWKS_URL, cache_keys=True)
+    return _jwks_client
 
 
 def _verify_supabase_jwt(token: str) -> Dict[str, Any]:
@@ -30,14 +46,17 @@ def _verify_supabase_jwt(token: str) -> Dict[str, Any]:
     except ImportError as exc:
         raise HTTPException(500, f"Missing dependency: {exc}")
 
-    if not SUPABASE_JWT_SECRET:
-        raise HTTPException(503, "Auth not configured (SUPABASE_JWT_SECRET missing)")
+    if not SUPABASE_JWKS_URL:
+        raise HTTPException(503, "Auth not configured (SUPABASE_JWKS_URL missing)")
 
     try:
+        client = _get_jwks_client()
+        signing_key = client.get_signing_key_from_jwt(token)
+
         payload = pyjwt.decode(
             token,
-            SUPABASE_JWT_SECRET,
-            algorithms=["HS256"],
+            signing_key.key,
+            algorithms=["ES256"],
             audience=SUPABASE_AUDIENCE if SUPABASE_AUDIENCE else None,
             issuer=SUPABASE_ISSUER if SUPABASE_ISSUER else None,
             options={
@@ -51,6 +70,9 @@ def _verify_supabase_jwt(token: str) -> Dict[str, Any]:
         raise HTTPException(401, "Token expired")
     except pyjwt.InvalidTokenError as exc:
         raise HTTPException(401, f"Invalid token: {exc}")
+    except Exception as exc:
+        logger.error("JWKS verification error: %s", exc)
+        raise HTTPException(401, f"Token verification failed: {exc}")
 
 
 class AuthUser:
