@@ -41,8 +41,12 @@ IMPORTANT:
 
 from __future__ import annotations
 
+import hashlib
+import logging
 import re
 from typing import Any, Dict, List, Optional
+
+from .ingredient_normalizer import normalize_ingredient as _normalize_full
 
 # Key nutrition fields used to determine if nutrition data is sufficient
 _KEY_NUTRITION_FIELDS = frozenset({
@@ -68,12 +72,12 @@ REF_CALORIES = 2000
 
 _NORMALIZE_RE = re.compile(r"[^a-z0-9\s]+")
 
+logger = logging.getLogger("labellens.scorer")
+
 
 def _normalize(text: str) -> str:
-    t = text.lower().strip().replace("-", " ").replace("_", " ")
-    t = _NORMALIZE_RE.sub(" ", t)
-    t = re.sub(r"\s+", " ", t).strip()
-    return t
+    """Use the full normalization pipeline from ingredient_normalizer."""
+    return _normalize_full(text)
 
 
 def _grade(score: int) -> str:
@@ -1251,6 +1255,105 @@ def detect_portion_sensitive(
 
 
 # ---------------------------------------------------------------------------
+# Ingredient match metadata (for frontend unknown / fallback display)
+# ---------------------------------------------------------------------------
+
+def _compute_match_metadata(ingredients: List[str]) -> Dict[str, Any]:
+    """Run the ingredient matcher and return structured metadata.
+
+    Returns a dict that can be merged into the product score response.
+    """
+    if not ingredients:
+        return {
+            "ingredient_match": None,
+            "total_ingredient_count": 0,
+            "recognized_count": 0,
+            "unknown_count": 0,
+            "fallback_count": 0,
+            "unknown_items": [],
+            "fallback_items": [],
+            "unknown_rate": 0.0,
+        }
+
+    try:
+        from .ingredient_matcher import match_ingredients
+        result = match_ingredients(ingredients)
+        return {
+            "ingredient_match": result,
+            "total_ingredient_count": result["total_count"],
+            "recognized_count": result["recognized_count"],
+            "unknown_count": result["unknown_count"],
+            "fallback_count": result["fallback_count"],
+            "unknown_items": result["unknown_items"],
+            "fallback_items": result["fallback_items"],
+            "unknown_rate": round(result["unknown_rate"], 3),
+        }
+    except Exception as exc:
+        logger.warning("Ingredient matcher failed: %s", exc)
+        return {
+            "ingredient_match": None,
+            "total_ingredient_count": len(ingredients),
+            "recognized_count": 0,
+            "unknown_count": 0,
+            "fallback_count": 0,
+            "unknown_items": [],
+            "fallback_items": [],
+            "unknown_rate": 0.0,
+        }
+
+
+def _hash_user_id(user_id: str | None) -> str | None:
+    """One-way hash for anonymized logging."""
+    if not user_id:
+        return None
+    return hashlib.sha256(f"labellens-salt-{user_id}".encode()).hexdigest()[:16]
+
+
+def log_unknown_event(
+    match_meta: Dict[str, Any],
+    barcode: str | None = None,
+    user_id: str | None = None,
+) -> None:
+    """Persist unknown ingredient events to DB (best-effort, non-blocking)."""
+    unknown_count = match_meta.get("unknown_count", 0)
+    fallback_count = match_meta.get("fallback_count", 0)
+    if unknown_count == 0 and fallback_count == 0:
+        return
+
+    try:
+        from ..database import SessionLocal
+        from ..models import IngredientUnknownEvent
+
+        db = SessionLocal()
+        try:
+            event = IngredientUnknownEvent(
+                user_hash=_hash_user_id(user_id),
+                barcode=barcode,
+                unknown_rate=match_meta.get("unknown_rate", 0.0),
+                unknown_items=[
+                    i.get("normalized", "") for i in match_meta.get("unknown_items", [])
+                ],
+                fallback_items=[
+                    {"category": i.get("fallback_category", i.get("category")),
+                     "normalized": i.get("normalized", "")}
+                    for i in match_meta.get("fallback_items", [])
+                ],
+                total_count=match_meta.get("total_ingredient_count", 0),
+                unknown_count=unknown_count,
+                fallback_count=fallback_count,
+            )
+            db.add(event)
+            db.commit()
+        except Exception as e:
+            logger.warning("Failed to log unknown ingredient event: %s", e)
+            db.rollback()
+        finally:
+            db.close()
+    except Exception as e:
+        logger.warning("Could not log unknown event (DB not available): %s", e)
+
+
+# ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
 
@@ -1609,6 +1712,10 @@ def calculate_product_score(
         )
 
     # ── Build response ────────────────────────────────────────
+
+    # ── Ingredient match metadata (v4) ────────────────────────
+    ingredient_match_meta = _compute_match_metadata(ingredients)
+
     return {
         # Backward compatibility (top-level = final_score)
         "score": final_score,
@@ -1663,6 +1770,8 @@ def calculate_product_score(
         "nutrition_score_serving": nutrition_score_serving_obj,
         "primary_nutrition_view": primary_nutrition_view,
         "portion_info": portion_info,
+        # ── Ingredient match metadata (v4) ──────────────────
+        **ingredient_match_meta,
     }
 
 

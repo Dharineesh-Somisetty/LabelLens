@@ -44,7 +44,18 @@ _MULTI_SPACE_RE = re.compile(r"\s+")
 
 
 def _normalize(text: str) -> str:
-    """Lowercase, remove punctuation, normalize separators, collapse spaces."""
+    """Lowercase, remove punctuation, normalize separators, collapse spaces.
+
+    NOTE: For KB indexing and lookups the full pipeline in
+    ingredient_normalizer.normalize_ingredient() is preferred.  This
+    function is kept for internal use / backward-compat.
+    """
+    # Prefer the full normalizer when available
+    try:
+        from .ingredient_normalizer import normalize_ingredient
+        return normalize_ingredient(text)
+    except Exception:
+        pass
     t = text.lower().strip().replace("-", " ").replace("_", " ")
     t = _NORMALIZE_RE.sub(" ", t)
     t = _MULTI_SPACE_RE.sub(" ", t).strip()

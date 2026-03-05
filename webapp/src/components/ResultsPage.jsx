@@ -3,6 +3,7 @@ import ChatPanel from './ChatPanel';
 import ScoreGauge from './ScoreGauge';
 import NutritionStatusBadge from './NutritionStatusBadge';
 import Sparkline from './Sparkline';
+import UnknownIngredientsBanner from './UnknownIngredientsBanner';
 
 /* -- severity helpers (light theme) ------------ */
 const severityColor = {
@@ -249,6 +250,13 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                 )}
 
                 {/* ╔══════════════════════════════════════╗
+                   ║  UNKNOWN INGREDIENTS BANNER            ║
+                   ╚══════════════════════════════════════╝ */}
+                {product_score && (
+                    <UnknownIngredientsBanner productScore={product_score} />
+                )}
+
+                {/* ╔══════════════════════════════════════╗
                    ║  2 - SCORE + STATS (tighter grid)    ║
                    ╚══════════════════════════════════════╝ */}
                 {product_score && (
@@ -478,21 +486,43 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                         Detected Ingredients ({ingredients.length})
                     </h2>
                     <div className="grid sm:grid-cols-2 gap-2">
-                        {ingredients.map((ing, i) => (
-                            <div key={i} className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-xl px-3 py-2 text-sm">
-                                <div>
-                                    <span className="text-gray-800 font-medium capitalize">{ing.name_canonical}</span>
-                                    {ing.notes && <span className="text-gray-400 ml-2 text-xs">({ing.notes})</span>}
+                        {ingredients.map((ing, i) => {
+                            /* Look up match status for this ingredient */
+                            const matchResults = product_score?.ingredient_match?.results || [];
+                            const matchInfo = matchResults.find(
+                                (m) => m.normalized === ing.name_canonical?.toLowerCase()
+                                    || m.raw === ing.name_canonical
+                                    || m.raw === ing.name_raw
+                            );
+                            const matchStatus = matchInfo?.status;
+
+                            return (
+                                <div key={i} className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-xl px-3 py-2 text-sm">
+                                    <div className="flex items-center gap-1.5 min-w-0">
+                                        <span className="text-gray-800 font-medium capitalize truncate">{ing.name_canonical}</span>
+                                        {ing.notes && <span className="text-gray-400 text-xs shrink-0">({ing.notes})</span>}
+                                        {matchStatus === 'unknown' && (
+                                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200 shrink-0">
+                                                Unknown
+                                            </span>
+                                        )}
+                                        {matchStatus === 'fallback' && (
+                                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 shrink-0"
+                                                  title={matchInfo?.reason || 'Detected by pattern'}>
+                                                {matchInfo?.fallback_category || 'Pattern'}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <div className="flex gap-1 flex-wrap justify-end shrink-0">
+                                        {ing.tags.slice(0, 3).map((t, j) => (
+                                            <span key={j} className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">
+                                                {t}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="flex gap-1 flex-wrap justify-end">
-                                    {ing.tags.slice(0, 3).map((t, j) => (
-                                        <span key={j} className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
 

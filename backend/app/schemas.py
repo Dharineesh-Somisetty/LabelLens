@@ -157,6 +157,15 @@ class ProductScore(BaseModel):
     nutrition_score_serving: Optional[NutritionScoreInfo] = None
     primary_nutrition_view: str = "100g"   # "100g" or "serving"
     portion_info: Optional[PortionInfo] = None
+    # Ingredient match metadata (v4)
+    ingredient_match: Optional[dict] = None
+    total_ingredient_count: int = 0
+    recognized_count: int = 0
+    unknown_count: int = 0
+    fallback_count: int = 0
+    unknown_items: List[dict] = Field(default_factory=list)
+    fallback_items: List[dict] = Field(default_factory=list)
+    unknown_rate: float = 0.0
 
 # ──────────────────────────────────────────────
 # Full analysis result returned to frontend

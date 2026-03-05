@@ -49,7 +49,7 @@ from .services.validators import (
     validate_personalized_summary,
     validate_chat_answer,
 )
-from .services.scorer import calculate_product_score
+from .services.scorer import calculate_product_score, log_unknown_event
 from .services.cache_service import (
     get_cached_by_barcode,
     upsert_cache_for_barcode,
@@ -470,6 +470,14 @@ async def _run_analysis_pipeline(
             allergen_statements=structured.allergen_statements,
         )
         result.product_score = ProductScore(**score_dict)
+        # Log unknown ingredient events (best-effort, non-blocking)
+        try:
+            log_unknown_event(
+                score_dict,
+                barcode=product.barcode,
+            )
+        except Exception:
+            pass
     except Exception as exc:
         logger.error("Scoring failed: %s", exc)
         result.product_score = None
@@ -753,3 +761,102 @@ async def chat(req: ChatRequest, db: DBSession = Depends(get_db)):
         answer=answer.answer,
         citations_used=answer.citations_used,
     )
+
+
+# ── POST /api/feedback/unknown-ingredient ────────────────────────
+@app.post("/api/feedback/unknown-ingredient")
+async def submit_unknown_ingredient(
+    request: Request,
+    db: DBSession = Depends(get_db),
+):
+    """User submits an unknown ingredient for review / KB curation."""
+    import hashlib
+    from .services.ingredient_normalizer import normalize_ingredient
+
+    body = await request.json()
+    ingredient_text = (body.get("ingredient_text") or "").strip()
+    if not ingredient_text:
+        raise HTTPException(400, "ingredient_text is required")
+
+    normalized = normalize_ingredient(ingredient_text)
+    if not normalized:
+        raise HTTPException(400, "Empty after normalization")
+
+    user_id = body.get("user_id")
+    user_hash = None
+    if user_id:
+        user_hash = hashlib.sha256(
+            f"labellens-salt-{user_id}".encode()
+        ).hexdigest()[:16]
+
+    submission = models.UnknownIngredientSubmission(
+        user_hash=user_hash,
+        ingredient_text=ingredient_text,
+        normalized_text=normalized,
+        suggested_category=body.get("suggested_category"),
+    )
+    db.add(submission)
+    db.commit()
+    db.refresh(submission)
+
+    return {
+        "id": submission.id,
+        "normalized_text": normalized,
+        "status": submission.status,
+    }
+
+
+# ── GET /api/admin/unknown-ingredients ───────────────────────────
+@app.get("/api/admin/unknown-ingredients")
+def get_top_unknowns(
+    limit: int = 50,
+    db: DBSession = Depends(get_db),
+):
+    """Returns the most frequently seen unknown ingredients (for KB curation)."""
+    events = (
+        db.query(models.IngredientUnknownEvent)
+        .order_by(models.IngredientUnknownEvent.created_at.desc())
+        .limit(1000)
+        .all()
+    )
+
+    freq: dict[str, int] = {}
+    for event in events:
+        items = event.unknown_items or []
+        for item in items:
+            if isinstance(item, str) and item:
+                freq[item] = freq.get(item, 0) + 1
+
+    sorted_items = sorted(freq.items(), key=lambda x: x[1], reverse=True)[:limit]
+    return [{"ingredient": name, "count": count} for name, count in sorted_items]
+
+
+# ── GET /api/admin/ingredient-submissions ────────────────────────
+@app.get("/api/admin/ingredient-submissions")
+def get_ingredient_submissions(
+    status: Optional[str] = None,
+    limit: int = 50,
+    db: DBSession = Depends(get_db),
+):
+    """Returns user-submitted unknown ingredient feedback."""
+    query = db.query(models.UnknownIngredientSubmission)
+    if status:
+        query = query.filter(models.UnknownIngredientSubmission.status == status)
+
+    submissions = (
+        query.order_by(models.UnknownIngredientSubmission.created_at.desc())
+        .limit(limit)
+        .all()
+    )
+
+    return [
+        {
+            "id": s.id,
+            "ingredient_text": s.ingredient_text,
+            "normalized_text": s.normalized_text,
+            "suggested_category": s.suggested_category,
+            "status": s.status,
+            "created_at": s.created_at.isoformat() if s.created_at else None,
+        }
+        for s in submissions
+    ]

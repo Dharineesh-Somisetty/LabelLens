@@ -75,3 +75,36 @@ class UserEntitlement(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
 
+# ──────────────────────────────────────────────
+# Unknown Ingredient Events (anonymized logging)
+# ──────────────────────────────────────────────
+class IngredientUnknownEvent(Base):
+    __tablename__ = "ingredient_unknown_events"
+
+    id = Column(String, primary_key=True, default=_new_uuid)
+    user_hash = Column(String, nullable=True)       # hashed user id, no raw email
+    barcode = Column(String, nullable=True)          # product barcode if available
+    unknown_rate = Column(Float, default=0.0)
+    unknown_items = Column(JSON, default=list)       # normalized strings only
+    fallback_items = Column(JSON, default=list)      # [{category, normalized}]
+    total_count = Column(Integer, default=0)
+    unknown_count = Column(Integer, default=0)
+    fallback_count = Column(Integer, default=0)
+    created_at = Column(DateTime, server_default=func.now())
+
+
+# ──────────────────────────────────────────────
+# User-submitted Unknown Ingredient Feedback
+# ──────────────────────────────────────────────
+class UnknownIngredientSubmission(Base):
+    __tablename__ = "unknown_ingredient_submissions"
+
+    id = Column(String, primary_key=True, default=_new_uuid)
+    user_hash = Column(String, nullable=True)
+    ingredient_text = Column(String, nullable=False)
+    normalized_text = Column(String, nullable=True)
+    suggested_category = Column(String, nullable=True)
+    status = Column(String, default="pending")       # pending | reviewed | added
+    created_at = Column(DateTime, server_default=func.now())
+
+
