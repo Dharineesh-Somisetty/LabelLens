@@ -41,9 +41,7 @@ export default function useCameraCapture() {
         video: { facingMode: 'environment' },
       });
       streamRef.current = stream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-      }
+      // srcObject is attached via useEffect after the video element renders
       setState('camera-live');
     } catch (err) {
       let msg = 'Camera access was denied.';
@@ -98,6 +96,15 @@ export default function useCameraCapture() {
     setErrorMsg('');
     setState('idle');
   }, [stopStream, capturedUrl]);
+
+  // Attach stream to video element after it renders in the DOM.
+  // The video element is conditionally rendered only when state === 'camera-live',
+  // so srcObject must be set AFTER the re-render (in useEffect), not inside startCamera.
+  useEffect(() => {
+    if (state === 'camera-live' && streamRef.current && videoRef.current) {
+      videoRef.current.srcObject = streamRef.current;
+    }
+  }, [state]);
 
   // Cleanup on unmount
   useEffect(() => {

@@ -1,5 +1,25 @@
 [
   {
+    "canonicalName": "acai",
+    "synonyms": [
+      "açaí",
+      "acai berry",
+      "açaí berry"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "acesulfame potassium",
     "synonyms": [
       "acesulfame k",
@@ -141,7 +161,11 @@
   },
   {
     "canonicalName": "allspice",
-    "synonyms": [],
+    "synonyms": [
+      "ground allspice",
+      "whole allspice",
+      "pimento spice"
+    ],
     "tags": [
       "spice"
     ],
@@ -232,6 +256,26 @@
     ]
   },
   {
+    "canonicalName": "ancho",
+    "synonyms": [
+      "ancho pepper",
+      "ancho chile",
+      "ancho chili",
+      "dried poblano"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "anchovy",
     "synonyms": [],
     "tags": [
@@ -248,7 +292,10 @@
   },
   {
     "canonicalName": "anise",
-    "synonyms": [],
+    "synonyms": [
+      "anise seed",
+      "aniseed"
+    ],
     "tags": [
       "spice"
     ],
@@ -264,7 +311,10 @@
   {
     "canonicalName": "annatto",
     "synonyms": [
-      "e160b"
+      "e160b",
+      "annatto seed",
+      "annatto seeds",
+      "achiote"
     ],
     "tags": [
       "color",
@@ -281,7 +331,10 @@
   },
   {
     "canonicalName": "apple",
-    "synonyms": [],
+    "synonyms": [
+      "apples",
+      "fresh apple"
+    ],
     "tags": [
       "produce"
     ],
@@ -326,7 +379,11 @@
   },
   {
     "canonicalName": "apricot",
-    "synonyms": [],
+    "synonyms": [
+      "apricots",
+      "dried apricot",
+      "dried apricots"
+    ],
     "tags": [
       "produce"
     ],
@@ -356,7 +413,10 @@
   },
   {
     "canonicalName": "artichoke",
-    "synonyms": [],
+    "synonyms": [
+      "artichoke hearts",
+      "artichokes"
+    ],
     "tags": [
       "produce"
     ],
@@ -395,6 +455,26 @@
     ]
   },
   {
+    "canonicalName": "arugula",
+    "synonyms": [
+      "rocket",
+      "rocket lettuce",
+      "rucola",
+      "roquette"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "ascorbic acid",
     "synonyms": [
       "vitamin c",
@@ -415,7 +495,9 @@
   },
   {
     "canonicalName": "asparagus",
-    "synonyms": [],
+    "synonyms": [
+      "asparagus spears"
+    ],
     "tags": [
       "produce"
     ],
@@ -457,7 +539,10 @@
   },
   {
     "canonicalName": "avocado",
-    "synonyms": [],
+    "synonyms": [
+      "avocados",
+      "hass avocado"
+    ],
     "tags": [
       "produce"
     ],
@@ -521,11 +606,33 @@
   },
   {
     "canonicalName": "banana",
-    "synonyms": [],
+    "synonyms": [
+      "bananas",
+      "fresh banana"
+    ],
     "tags": [
       "produce"
     ],
     "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "banana pepper",
+    "synonyms": [
+      "banana peppers",
+      "banana chile",
+      "yellow wax pepper"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
     "considerations": [],
     "citations": [
       {
@@ -552,7 +659,10 @@
   },
   {
     "canonicalName": "basil",
-    "synonyms": [],
+    "synonyms": [
+      "sweet basil",
+      "fresh basil"
+    ],
     "tags": [
       "herb"
     ],
@@ -582,7 +692,11 @@
   },
   {
     "canonicalName": "bay leaf",
-    "synonyms": [],
+    "synonyms": [
+      "bay leaves",
+      "laurel leaf",
+      "laurel leaves"
+    ],
     "tags": [
       "herb"
     ],
@@ -649,7 +763,15 @@
   },
   {
     "canonicalName": "bell pepper",
-    "synonyms": [],
+    "synonyms": [
+      "sweet pepper",
+      "capsicum",
+      "bell peppers",
+      "green bell pepper",
+      "red bell pepper",
+      "yellow bell pepper",
+      "orange bell pepper"
+    ],
     "tags": [
       "produce"
     ],
@@ -728,7 +850,10 @@
   },
   {
     "canonicalName": "black beans",
-    "synonyms": [],
+    "synonyms": [
+      "black bean",
+      "black turtle beans"
+    ],
     "tags": [
       "legume"
     ],
@@ -743,7 +868,13 @@
   },
   {
     "canonicalName": "black pepper",
-    "synonyms": [],
+    "synonyms": [
+      "ground black pepper",
+      "cracked black pepper",
+      "black peppercorn",
+      "black peppercorns",
+      "peppercorn"
+    ],
     "tags": [
       "spice"
     ],
@@ -773,7 +904,9 @@
   },
   {
     "canonicalName": "blackberry",
-    "synonyms": [],
+    "synonyms": [
+      "blackberries"
+    ],
     "tags": [
       "produce"
     ],
@@ -830,8 +963,50 @@
   },
   {
     "canonicalName": "blueberry",
-    "synonyms": [],
+    "synonyms": [
+      "blueberries",
+      "wild blueberry",
+      "wild blueberries"
+    ],
     "tags": [
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "bok choy",
+    "synonyms": [
+      "bok choi",
+      "pak choi",
+      "pak choy",
+      "chinese cabbage"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "boysenberry",
+    "synonyms": [
+      "boysenberries"
+    ],
+    "tags": [
+      "fruit",
       "produce"
     ],
     "description": "A fruit ingredient used in foods and drinks.",
@@ -875,7 +1050,9 @@
   },
   {
     "canonicalName": "broccoli",
-    "synonyms": [],
+    "synonyms": [
+      "broccoli florets"
+    ],
     "tags": [
       "produce"
     ],
@@ -905,7 +1082,11 @@
   },
   {
     "canonicalName": "brussels sprouts",
-    "synonyms": [],
+    "synonyms": [
+      "brussels sprout",
+      "brussel sprouts",
+      "brussel sprout"
+    ],
     "tags": [
       "produce"
     ],
@@ -965,7 +1146,10 @@
   },
   {
     "canonicalName": "butternut squash",
-    "synonyms": [],
+    "synonyms": [
+      "butternut",
+      "butternut squashes"
+    ],
     "tags": [
       "produce"
     ],
@@ -980,7 +1164,11 @@
   },
   {
     "canonicalName": "cabbage",
-    "synonyms": [],
+    "synonyms": [
+      "green cabbage",
+      "red cabbage",
+      "napa cabbage"
+    ],
     "tags": [
       "produce"
     ],
@@ -1287,7 +1475,10 @@
   },
   {
     "canonicalName": "caraway",
-    "synonyms": [],
+    "synonyms": [
+      "caraway seeds",
+      "caraway seed"
+    ],
     "tags": [
       "spice"
     ],
@@ -1320,7 +1511,13 @@
   },
   {
     "canonicalName": "cardamom",
-    "synonyms": [],
+    "synonyms": [
+      "cardamom pods",
+      "green cardamom",
+      "black cardamom",
+      "cardamon",
+      "cardamum"
+    ],
     "tags": [
       "spice"
     ],
@@ -1403,7 +1600,9 @@
   },
   {
     "canonicalName": "carrot",
-    "synonyms": [],
+    "synonyms": [
+      "carrots"
+    ],
     "tags": [
       "produce"
     ],
@@ -1489,7 +1688,9 @@
   },
   {
     "canonicalName": "cauliflower",
-    "synonyms": [],
+    "synonyms": [
+      "cauliflower florets"
+    ],
     "tags": [
       "produce"
     ],
@@ -1504,7 +1705,11 @@
   },
   {
     "canonicalName": "cayenne pepper",
-    "synonyms": [],
+    "synonyms": [
+      "cayenne",
+      "ground cayenne",
+      "cayenne peppers"
+    ],
     "tags": [
       "spice"
     ],
@@ -1519,7 +1724,10 @@
   },
   {
     "canonicalName": "celery",
-    "synonyms": [],
+    "synonyms": [
+      "celery stalk",
+      "celery stalks"
+    ],
     "tags": [
       "produce"
     ],
@@ -1534,7 +1742,26 @@
   },
   {
     "canonicalName": "celery salt",
-    "synonyms": [],
+    "synonyms": [
+      "celery seasoning"
+    ],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "celery seed",
+    "synonyms": [
+      "celery seeds"
+    ],
     "tags": [
       "spice"
     ],
@@ -1598,11 +1825,33 @@
   },
   {
     "canonicalName": "cherry",
-    "synonyms": [],
+    "synonyms": [
+      "cherries",
+      "sweet cherry",
+      "tart cherry",
+      "sour cherry"
+    ],
     "tags": [
       "produce"
     ],
     "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "chervil",
+    "synonyms": [
+      "fresh chervil"
+    ],
+    "tags": [
+      "herb"
+    ],
+    "description": "A culinary herb used for flavor.",
     "considerations": [],
     "citations": [
       {
@@ -1643,7 +1892,12 @@
   },
   {
     "canonicalName": "chickpeas",
-    "synonyms": [],
+    "synonyms": [
+      "chickpea",
+      "garbanzo beans",
+      "garbanzo",
+      "ceci beans"
+    ],
     "tags": [
       "legume"
     ],
@@ -1657,8 +1911,53 @@
     ]
   },
   {
+    "canonicalName": "chili flakes",
+    "synonyms": [
+      "chile flakes",
+      "chilli flakes",
+      "pepper flakes"
+    ],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "chili pepper",
+    "synonyms": [
+      "chili peppers",
+      "chile pepper",
+      "chile peppers",
+      "chilli pepper",
+      "chilli peppers",
+      "hot chili pepper"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "chili powder",
-    "synonyms": [],
+    "synonyms": [
+      "chile powder",
+      "chili seasoning",
+      "chilli powder"
+    ],
     "tags": [
       "spice"
     ],
@@ -1673,7 +1972,13 @@
   },
   {
     "canonicalName": "chipotle",
-    "synonyms": [],
+    "synonyms": [
+      "chipotle pepper",
+      "chipotle peppers",
+      "chipotle chile",
+      "smoked jalapeno",
+      "smoked jalapeño"
+    ],
     "tags": [
       "spice"
     ],
@@ -1688,7 +1993,9 @@
   },
   {
     "canonicalName": "chives",
-    "synonyms": [],
+    "synonyms": [
+      "fresh chives"
+    ],
     "tags": [
       "herb"
     ],
@@ -1703,7 +2010,11 @@
   },
   {
     "canonicalName": "cilantro",
-    "synonyms": [],
+    "synonyms": [
+      "fresh cilantro",
+      "coriander leaf",
+      "coriander leaves"
+    ],
     "tags": [
       "herb"
     ],
@@ -1718,7 +2029,11 @@
   },
   {
     "canonicalName": "cinnamon",
-    "synonyms": [],
+    "synonyms": [
+      "ground cinnamon",
+      "ceylon cinnamon",
+      "cassia cinnamon"
+    ],
     "tags": [
       "spice"
     ],
@@ -1769,7 +2084,10 @@
   },
   {
     "canonicalName": "clove",
-    "synonyms": [],
+    "synonyms": [
+      "cloves",
+      "whole clove"
+    ],
     "tags": [
       "spice"
     ],
@@ -1829,7 +2147,12 @@
   },
   {
     "canonicalName": "coconut",
-    "synonyms": [],
+    "synonyms": [
+      "coconut meat",
+      "fresh coconut",
+      "dried coconut",
+      "desiccated coconut"
+    ],
     "tags": [
       "produce"
     ],
@@ -1948,8 +2271,32 @@
     ]
   },
   {
+    "canonicalName": "collard greens",
+    "synonyms": [
+      "collards",
+      "collard",
+      "collard green"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "coriander",
-    "synonyms": [],
+    "synonyms": [
+      "coriander seed",
+      "coriander seeds",
+      "ground coriander",
+      "coriander powder"
+    ],
     "tags": [
       "spice"
     ],
@@ -1994,7 +2341,10 @@
   },
   {
     "canonicalName": "corn",
-    "synonyms": [],
+    "synonyms": [
+      "sweet corn",
+      "maize"
+    ],
     "tags": [
       "produce"
     ],
@@ -2122,7 +2472,11 @@
   },
   {
     "canonicalName": "cranberry",
-    "synonyms": [],
+    "synonyms": [
+      "cranberries",
+      "dried cranberry",
+      "dried cranberries"
+    ],
     "tags": [
       "produce"
     ],
@@ -2184,7 +2538,13 @@
   },
   {
     "canonicalName": "crushed red pepper",
-    "synonyms": [],
+    "synonyms": [
+      "red pepper flakes",
+      "chili flakes",
+      "dried chili flakes",
+      "crushed red peppers",
+      "hot pepper flakes"
+    ],
     "tags": [
       "spice"
     ],
@@ -2199,7 +2559,9 @@
   },
   {
     "canonicalName": "cucumber",
-    "synonyms": [],
+    "synonyms": [
+      "cucumbers"
+    ],
     "tags": [
       "produce"
     ],
@@ -2214,7 +2576,9 @@
   },
   {
     "canonicalName": "cumin",
-    "synonyms": [],
+    "synonyms": [
+      "ground cumin"
+    ],
     "tags": [
       "spice"
     ],
@@ -2229,7 +2593,9 @@
   },
   {
     "canonicalName": "cumin seed",
-    "synonyms": [],
+    "synonyms": [
+      "cumin seeds"
+    ],
     "tags": [
       "spice"
     ],
@@ -2274,7 +2640,12 @@
   },
   {
     "canonicalName": "date",
-    "synonyms": [],
+    "synonyms": [
+      "dates",
+      "medjool date",
+      "medjool dates",
+      "deglet noor"
+    ],
     "tags": [
       "produce"
     ],
@@ -2345,7 +2716,10 @@
   },
   {
     "canonicalName": "dill",
-    "synonyms": [],
+    "synonyms": [
+      "fresh dill",
+      "dill weed"
+    ],
     "tags": [
       "herb"
     ],
@@ -2411,6 +2785,47 @@
     ]
   },
   {
+    "canonicalName": "dragon fruit",
+    "synonyms": [
+      "dragonfruit",
+      "pitaya",
+      "pitahaya"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "dried chili",
+    "synonyms": [
+      "dried chili peppers",
+      "dried chile",
+      "dried chiles",
+      "dried chilies",
+      "whole dried chili"
+    ],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "durum wheat",
     "synonyms": [],
     "tags": [
@@ -2427,7 +2842,10 @@
   },
   {
     "canonicalName": "edamame",
-    "synonyms": [],
+    "synonyms": [
+      "edamame beans",
+      "mukimame"
+    ],
     "tags": [
       "legume"
     ],
@@ -2471,7 +2889,48 @@
   },
   {
     "canonicalName": "eggplant",
-    "synonyms": [],
+    "synonyms": [
+      "aubergine",
+      "eggplants"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "elderberry",
+    "synonyms": [
+      "elderberries",
+      "elder berry"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "endive",
+    "synonyms": [
+      "belgian endive",
+      "frisee",
+      "curly endive"
+    ],
     "tags": [
       "produce"
     ],
@@ -2536,7 +2995,28 @@
   },
   {
     "canonicalName": "fennel",
-    "synonyms": [],
+    "synonyms": [
+      "fennel bulb",
+      "fresh fennel"
+    ],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "fennel seed",
+    "synonyms": [
+      "fennel seeds",
+      "ground fennel seed"
+    ],
     "tags": [
       "spice"
     ],
@@ -2551,7 +3031,11 @@
   },
   {
     "canonicalName": "fenugreek",
-    "synonyms": [],
+    "synonyms": [
+      "fenugreek seeds",
+      "fenugreek leaves",
+      "methi"
+    ],
     "tags": [
       "spice"
     ],
@@ -2581,7 +3065,11 @@
   },
   {
     "canonicalName": "fig",
-    "synonyms": [],
+    "synonyms": [
+      "figs",
+      "dried fig",
+      "dried figs"
+    ],
     "tags": [
       "produce"
     ],
@@ -2720,7 +3208,11 @@
   },
   {
     "canonicalName": "garlic",
-    "synonyms": [],
+    "synonyms": [
+      "garlic clove",
+      "garlic cloves",
+      "fresh garlic"
+    ],
     "tags": [
       "produce"
     ],
@@ -2735,7 +3227,11 @@
   },
   {
     "canonicalName": "garlic powder",
-    "synonyms": [],
+    "synonyms": [
+      "dehydrated garlic",
+      "dried garlic",
+      "granulated garlic"
+    ],
     "tags": [
       "spice"
     ],
@@ -2807,8 +3303,29 @@
     ]
   },
   {
+    "canonicalName": "ghost pepper",
+    "synonyms": [
+      "ghost peppers",
+      "bhut jolokia",
+      "naga pepper"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "ginger",
-    "synonyms": [],
+    "synonyms": [
+      "fresh ginger"
+    ],
     "tags": [
       "spice"
     ],
@@ -2838,7 +3355,9 @@
   },
   {
     "canonicalName": "ginger root",
-    "synonyms": [],
+    "synonyms": [
+      "ginger rhizome"
+    ],
     "tags": [
       "produce"
     ],
@@ -2899,8 +3418,51 @@
     ]
   },
   {
+    "canonicalName": "goji berry",
+    "synonyms": [
+      "goji berries",
+      "goji",
+      "wolfberry",
+      "wolfberries"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "gooseberry",
+    "synonyms": [
+      "gooseberries"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "grape",
-    "synonyms": [],
+    "synonyms": [
+      "grapes",
+      "red grape",
+      "white grape"
+    ],
     "tags": [
       "produce"
     ],
@@ -2960,7 +3522,51 @@
   },
   {
     "canonicalName": "green beans",
-    "synonyms": [],
+    "synonyms": [
+      "string beans",
+      "snap beans",
+      "french beans",
+      "haricot vert"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "green chili",
+    "synonyms": [
+      "green chili pepper",
+      "green chili peppers",
+      "green chile",
+      "green chiles",
+      "green chilies",
+      "hatch green chile"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "green onion",
+    "synonyms": [
+      "green onions"
+    ],
     "tags": [
       "produce"
     ],
@@ -2975,7 +3581,11 @@
   },
   {
     "canonicalName": "green pepper",
-    "synonyms": [],
+    "synonyms": [
+      "green bell pepper",
+      "green capsicum",
+      "green peppers"
+    ],
     "tags": [
       "produce"
     ],
@@ -2990,7 +3600,28 @@
   },
   {
     "canonicalName": "green peppercorn",
-    "synonyms": [],
+    "synonyms": [
+      "green peppercorns"
+    ],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "guajillo",
+    "synonyms": [
+      "guajillo pepper",
+      "guajillo chile",
+      "guajillo chili"
+    ],
     "tags": [
       "spice"
     ],
@@ -3044,7 +3675,9 @@
   },
   {
     "canonicalName": "guava",
-    "synonyms": [],
+    "synonyms": [
+      "guavas"
+    ],
     "tags": [
       "produce"
     ],
@@ -3059,7 +3692,11 @@
   },
   {
     "canonicalName": "habanero",
-    "synonyms": [],
+    "synonyms": [
+      "habanero pepper",
+      "habanero peppers",
+      "habanero chile"
+    ],
     "tags": [
       "produce"
     ],
@@ -3239,6 +3876,23 @@
     ]
   },
   {
+    "canonicalName": "hot pepper",
+    "synonyms": [
+      "hot peppers"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "hydroxypropyl distarch phosphate",
     "synonyms": [
       "E1442",
@@ -3327,8 +3981,32 @@
     ]
   },
   {
+    "canonicalName": "jackfruit",
+    "synonyms": [
+      "jack fruit"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "jalapeno",
-    "synonyms": [],
+    "synonyms": [
+      "jalapeño",
+      "jalapeno pepper",
+      "jalapeño pepper",
+      "jalapeno peppers",
+      "jalapeño peppers"
+    ],
     "tags": [
       "produce"
     ],
@@ -3357,6 +4035,24 @@
     ]
   },
   {
+    "canonicalName": "juniper berry",
+    "synonyms": [
+      "juniper berries",
+      "juniper"
+    ],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "kaffir lime leaf",
     "synonyms": [],
     "tags": [
@@ -3373,7 +4069,12 @@
   },
   {
     "canonicalName": "kale",
-    "synonyms": [],
+    "synonyms": [
+      "curly kale",
+      "lacinato kale",
+      "dinosaur kale",
+      "tuscan kale"
+    ],
     "tags": [
       "produce"
     ],
@@ -3388,7 +4089,10 @@
   },
   {
     "canonicalName": "kidney beans",
-    "synonyms": [],
+    "synonyms": [
+      "kidney bean",
+      "red kidney beans"
+    ],
     "tags": [
       "legume"
     ],
@@ -3403,11 +4107,33 @@
   },
   {
     "canonicalName": "kiwi",
-    "synonyms": [],
+    "synonyms": [
+      "kiwi fruit",
+      "kiwifruit",
+      "kiwis"
+    ],
     "tags": [
       "produce"
     ],
     "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "kohlrabi",
+    "synonyms": [
+      "kohlrabies",
+      "german turnip"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
     "considerations": [],
     "citations": [
       {
@@ -3518,7 +4244,11 @@
   },
   {
     "canonicalName": "lavender",
-    "synonyms": [],
+    "synonyms": [
+      "lavender flowers",
+      "dried lavender",
+      "culinary lavender"
+    ],
     "tags": [
       "herb"
     ],
@@ -3555,7 +4285,9 @@
   },
   {
     "canonicalName": "leek",
-    "synonyms": [],
+    "synonyms": [
+      "leeks"
+    ],
     "tags": [
       "produce"
     ],
@@ -3570,7 +4302,10 @@
   },
   {
     "canonicalName": "lemon",
-    "synonyms": [],
+    "synonyms": [
+      "lemons",
+      "fresh lemon"
+    ],
     "tags": [
       "produce"
     ],
@@ -3600,7 +4335,10 @@
   },
   {
     "canonicalName": "lemongrass",
-    "synonyms": [],
+    "synonyms": [
+      "lemon grass",
+      "lemon-grass"
+    ],
     "tags": [
       "herb"
     ],
@@ -3615,7 +4353,12 @@
   },
   {
     "canonicalName": "lentils",
-    "synonyms": [],
+    "synonyms": [
+      "lentil",
+      "red lentils",
+      "green lentils",
+      "brown lentils"
+    ],
     "tags": [
       "legume"
     ],
@@ -3630,7 +4373,11 @@
   },
   {
     "canonicalName": "lettuce",
-    "synonyms": [],
+    "synonyms": [
+      "romaine lettuce",
+      "iceberg lettuce",
+      "leaf lettuce"
+    ],
     "tags": [
       "produce"
     ],
@@ -3644,8 +4391,31 @@
     ]
   },
   {
+    "canonicalName": "lima beans",
+    "synonyms": [
+      "lima bean",
+      "butter beans",
+      "butter bean"
+    ],
+    "tags": [
+      "legume",
+      "produce"
+    ],
+    "description": "A legume ingredient used in foods.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "lime",
-    "synonyms": [],
+    "synonyms": [
+      "limes",
+      "fresh lime"
+    ],
     "tags": [
       "produce"
     ],
@@ -3707,12 +4477,51 @@
     ]
   },
   {
+    "canonicalName": "lychee",
+    "synonyms": [
+      "litchi",
+      "lichi",
+      "lichee"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "macadamia",
     "synonyms": [],
     "tags": [
       "seed-or-nut"
     ],
     "description": "A nut or seed ingredient; may be an allergen for some people.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "mace",
+    "synonyms": [
+      "ground mace",
+      "mace spice",
+      "mace blade"
+    ],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
     "considerations": [],
     "citations": [
       {
@@ -3834,7 +4643,11 @@
   },
   {
     "canonicalName": "mango",
-    "synonyms": [],
+    "synonyms": [
+      "mangoes",
+      "mangos",
+      "fresh mango"
+    ],
     "tags": [
       "produce"
     ],
@@ -3887,7 +4700,10 @@
   },
   {
     "canonicalName": "marjoram",
-    "synonyms": [],
+    "synonyms": [
+      "sweet marjoram",
+      "dried marjoram"
+    ],
     "tags": [
       "herb"
     ],
@@ -3999,7 +4815,11 @@
   },
   {
     "canonicalName": "mint",
-    "synonyms": [],
+    "synonyms": [
+      "fresh mint",
+      "spearmint",
+      "peppermint leaf"
+    ],
     "tags": [
       "herb"
     ],
@@ -4156,7 +4976,11 @@
   },
   {
     "canonicalName": "mushroom",
-    "synonyms": [],
+    "synonyms": [
+      "mushrooms",
+      "white mushroom",
+      "button mushroom"
+    ],
     "tags": [
       "produce"
     ],
@@ -4186,7 +5010,11 @@
   },
   {
     "canonicalName": "mustard seed",
-    "synonyms": [],
+    "synonyms": [
+      "mustard seeds",
+      "yellow mustard seed",
+      "brown mustard seed"
+    ],
     "tags": [
       "spice"
     ],
@@ -4226,7 +5054,11 @@
   },
   {
     "canonicalName": "navy beans",
-    "synonyms": [],
+    "synonyms": [
+      "navy bean",
+      "white beans",
+      "great northern beans"
+    ],
     "tags": [
       "legume"
     ],
@@ -4241,7 +5073,9 @@
   },
   {
     "canonicalName": "nectarine",
-    "synonyms": [],
+    "synonyms": [
+      "nectarines"
+    ],
     "tags": [
       "produce"
     ],
@@ -4273,7 +5107,10 @@
   },
   {
     "canonicalName": "nutmeg",
-    "synonyms": [],
+    "synonyms": [
+      "ground nutmeg",
+      "whole nutmeg"
+    ],
     "tags": [
       "spice"
     ],
@@ -4352,7 +5189,11 @@
   },
   {
     "canonicalName": "okra",
-    "synonyms": [],
+    "synonyms": [
+      "okras",
+      "lady finger",
+      "ladyfinger"
+    ],
     "tags": [
       "produce"
     ],
@@ -4412,7 +5253,11 @@
   },
   {
     "canonicalName": "onion",
-    "synonyms": [],
+    "synonyms": [
+      "onions",
+      "yellow onion",
+      "white onion"
+    ],
     "tags": [
       "produce"
     ],
@@ -4427,7 +5272,10 @@
   },
   {
     "canonicalName": "onion powder",
-    "synonyms": [],
+    "synonyms": [
+      "dehydrated onion",
+      "dried onion"
+    ],
     "tags": [
       "spice"
     ],
@@ -4442,7 +5290,10 @@
   },
   {
     "canonicalName": "orange",
-    "synonyms": [],
+    "synonyms": [
+      "oranges",
+      "fresh orange"
+    ],
     "tags": [
       "produce"
     ],
@@ -4457,7 +5308,10 @@
   },
   {
     "canonicalName": "oregano",
-    "synonyms": [],
+    "synonyms": [
+      "dried oregano",
+      "mexican oregano"
+    ],
     "tags": [
       "herb"
     ],
@@ -4541,7 +5395,10 @@
   },
   {
     "canonicalName": "papaya",
-    "synonyms": [],
+    "synonyms": [
+      "papayas",
+      "pawpaw"
+    ],
     "tags": [
       "produce"
     ],
@@ -4556,7 +5413,12 @@
   },
   {
     "canonicalName": "paprika",
-    "synonyms": [],
+    "synonyms": [
+      "hungarian paprika",
+      "sweet paprika",
+      "pimenton",
+      "pimentón"
+    ],
     "tags": [
       "spice"
     ],
@@ -4586,7 +5448,12 @@
   },
   {
     "canonicalName": "parsley",
-    "synonyms": [],
+    "synonyms": [
+      "fresh parsley",
+      "flat leaf parsley",
+      "flat-leaf parsley",
+      "italian parsley"
+    ],
     "tags": [
       "herb"
     ],
@@ -4601,7 +5468,9 @@
   },
   {
     "canonicalName": "parsnip",
-    "synonyms": [],
+    "synonyms": [
+      "parsnips"
+    ],
     "tags": [
       "produce"
     ],
@@ -4616,7 +5485,11 @@
   },
   {
     "canonicalName": "passion fruit",
-    "synonyms": [],
+    "synonyms": [
+      "passion fruits",
+      "passionfruit",
+      "maracuya"
+    ],
     "tags": [
       "produce"
     ],
@@ -4631,7 +5504,10 @@
   },
   {
     "canonicalName": "peach",
-    "synonyms": [],
+    "synonyms": [
+      "peaches",
+      "fresh peach"
+    ],
     "tags": [
       "produce"
     ],
@@ -4719,7 +5595,10 @@
   },
   {
     "canonicalName": "pear",
-    "synonyms": [],
+    "synonyms": [
+      "pears",
+      "fresh pear"
+    ],
     "tags": [
       "produce"
     ],
@@ -4734,7 +5613,11 @@
   },
   {
     "canonicalName": "peas",
-    "synonyms": [],
+    "synonyms": [
+      "pea",
+      "green peas",
+      "garden peas"
+    ],
     "tags": [
       "produce"
     ],
@@ -4808,6 +5691,25 @@
     ]
   },
   {
+    "canonicalName": "persimmon",
+    "synonyms": [
+      "persimmons",
+      "sharon fruit"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "phosphoric acid",
     "synonyms": [
       "e338"
@@ -4822,6 +5724,26 @@
       {
         "title": "FDA Food Additive Status List",
         "url": "https://www.fda.gov/food/food-additives-petitions/food-additive-status-list"
+      }
+    ]
+  },
+  {
+    "canonicalName": "pimento",
+    "synonyms": [
+      "pimento pepper",
+      "pimiento",
+      "pimiento pepper",
+      "cherry pepper"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
       }
     ]
   },
@@ -4842,7 +5764,10 @@
   },
   {
     "canonicalName": "pineapple",
-    "synonyms": [],
+    "synonyms": [
+      "pineapples",
+      "fresh pineapple"
+    ],
     "tags": [
       "produce"
     ],
@@ -4857,7 +5782,10 @@
   },
   {
     "canonicalName": "pink peppercorn",
-    "synonyms": [],
+    "synonyms": [
+      "pink pepper",
+      "pink peppercorns"
+    ],
     "tags": [
       "spice"
     ],
@@ -4872,7 +5800,9 @@
   },
   {
     "canonicalName": "pinto beans",
-    "synonyms": [],
+    "synonyms": [
+      "pinto bean"
+    ],
     "tags": [
       "legume"
     ],
@@ -4902,7 +5832,10 @@
   },
   {
     "canonicalName": "plantain",
-    "synonyms": [],
+    "synonyms": [
+      "plantains",
+      "cooking banana"
+    ],
     "tags": [
       "produce"
     ],
@@ -4917,11 +5850,33 @@
   },
   {
     "canonicalName": "plum",
-    "synonyms": [],
+    "synonyms": [
+      "plums",
+      "fresh plum"
+    ],
     "tags": [
       "produce"
     ],
     "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "poblano",
+    "synonyms": [
+      "poblano pepper",
+      "poblano peppers",
+      "poblano chile"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
     "considerations": [],
     "citations": [
       {
@@ -4988,7 +5943,9 @@
   },
   {
     "canonicalName": "pomegranate",
-    "synonyms": [],
+    "synonyms": [
+      "pomegranates"
+    ],
     "tags": [
       "produce"
     ],
@@ -5102,7 +6059,11 @@
   },
   {
     "canonicalName": "potato",
-    "synonyms": [],
+    "synonyms": [
+      "potatoes",
+      "russet potato",
+      "white potato"
+    ],
     "tags": [
       "produce"
     ],
@@ -5204,7 +6165,9 @@
   },
   {
     "canonicalName": "pumpkin",
-    "synonyms": [],
+    "synonyms": [
+      "pumpkin puree"
+    ],
     "tags": [
       "produce"
     ],
@@ -5249,7 +6212,10 @@
   },
   {
     "canonicalName": "radish",
-    "synonyms": [],
+    "synonyms": [
+      "radishes",
+      "red radish"
+    ],
     "tags": [
       "produce"
     ],
@@ -5294,7 +6260,10 @@
   },
   {
     "canonicalName": "raspberry",
-    "synonyms": [],
+    "synonyms": [
+      "raspberries",
+      "red raspberry"
+    ],
     "tags": [
       "produce"
     ],
@@ -5348,8 +6317,33 @@
     ]
   },
   {
+    "canonicalName": "red chili",
+    "synonyms": [
+      "red chili pepper",
+      "red chili peppers",
+      "red chile",
+      "red chiles",
+      "red chilies",
+      "dried red chili"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "red onion",
-    "synonyms": [],
+    "synonyms": [
+      "red onions",
+      "purple onion"
+    ],
     "tags": [
       "produce"
     ],
@@ -5364,7 +6358,45 @@
   },
   {
     "canonicalName": "red pepper",
-    "synonyms": [],
+    "synonyms": [
+      "red bell pepper",
+      "red capsicum",
+      "red peppers"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "red pepper flakes",
+    "synonyms": [
+      "crushed red pepper flakes"
+    ],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "rhubarb",
+    "synonyms": [
+      "rhubarbs"
+    ],
     "tags": [
       "produce"
     ],
@@ -5445,12 +6477,54 @@
     ]
   },
   {
+    "canonicalName": "roasted red pepper",
+    "synonyms": [
+      "roasted red peppers",
+      "roasted pepper",
+      "roasted peppers",
+      "fire roasted red pepper"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "rosemary",
-    "synonyms": [],
+    "synonyms": [
+      "fresh rosemary",
+      "dried rosemary"
+    ],
     "tags": [
       "herb"
     ],
     "description": "A culinary herb used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "rutabaga",
+    "synonyms": [
+      "rutabagas",
+      "swede",
+      "swedish turnip"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
     "considerations": [],
     "citations": [
       {
@@ -5527,7 +6601,9 @@
   },
   {
     "canonicalName": "saffron",
-    "synonyms": [],
+    "synonyms": [
+      "saffron threads"
+    ],
     "tags": [
       "spice"
     ],
@@ -5542,7 +6618,11 @@
   },
   {
     "canonicalName": "sage",
-    "synonyms": [],
+    "synonyms": [
+      "fresh sage",
+      "dried sage",
+      "ground sage"
+    ],
     "tags": [
       "herb"
     ],
@@ -5636,7 +6716,31 @@
   },
   {
     "canonicalName": "scallion",
-    "synonyms": [],
+    "synonyms": [
+      "green onion",
+      "green onions",
+      "spring onion",
+      "spring onions",
+      "salad onion"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "scotch bonnet",
+    "synonyms": [
+      "scotch bonnet pepper",
+      "scotch bonnet peppers"
+    ],
     "tags": [
       "produce"
     ],
@@ -5681,7 +6785,11 @@
   },
   {
     "canonicalName": "serrano pepper",
-    "synonyms": [],
+    "synonyms": [
+      "serrano chile",
+      "serrano",
+      "serrano peppers"
+    ],
     "tags": [
       "produce"
     ],
@@ -5749,7 +6857,10 @@
   },
   {
     "canonicalName": "shallot",
-    "synonyms": [],
+    "synonyms": [
+      "shallots",
+      "eschalot"
+    ],
     "tags": [
       "produce"
     ],
@@ -5905,11 +7016,52 @@
   },
   {
     "canonicalName": "smoked paprika",
-    "synonyms": [],
+    "synonyms": [
+      "pimentón ahumado",
+      "smoked pimenton",
+      "smoked pimentón"
+    ],
     "tags": [
       "spice"
     ],
     "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "snap peas",
+    "synonyms": [
+      "sugar snap peas",
+      "snap pea"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "snow peas",
+    "synonyms": [
+      "snow pea",
+      "mangetout",
+      "mange tout"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
     "considerations": [],
     "citations": [
       {
@@ -6420,7 +7572,9 @@
   },
   {
     "canonicalName": "spinach",
-    "synonyms": [],
+    "synonyms": [
+      "baby spinach"
+    ],
     "tags": [
       "produce"
     ],
@@ -6450,7 +7604,10 @@
   },
   {
     "canonicalName": "squash",
-    "synonyms": [],
+    "synonyms": [
+      "summer squash",
+      "winter squash"
+    ],
     "tags": [
       "produce"
     ],
@@ -6480,7 +7637,10 @@
   },
   {
     "canonicalName": "star anise",
-    "synonyms": [],
+    "synonyms": [
+      "star anise pods",
+      "staranise"
+    ],
     "tags": [
       "spice"
     ],
@@ -6559,6 +7719,25 @@
     ]
   },
   {
+    "canonicalName": "starfruit",
+    "synonyms": [
+      "star fruit",
+      "carambola"
+    ],
+    "tags": [
+      "fruit",
+      "produce"
+    ],
+    "description": "A fruit ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "stevia",
     "synonyms": [
       "steviol glycosides",
@@ -6583,7 +7762,10 @@
   },
   {
     "canonicalName": "strawberry",
-    "synonyms": [],
+    "synonyms": [
+      "strawberries",
+      "fresh strawberry"
+    ],
     "tags": [
       "produce"
     ],
@@ -6651,7 +7833,9 @@
   },
   {
     "canonicalName": "sumac",
-    "synonyms": [],
+    "synonyms": [
+      "ground sumac"
+    ],
     "tags": [
       "spice"
     ],
@@ -6728,7 +7912,30 @@
   },
   {
     "canonicalName": "sweet potato",
-    "synonyms": [],
+    "synonyms": [
+      "sweet potatoes",
+      "yam"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "swiss chard",
+    "synonyms": [
+      "chard",
+      "rainbow chard",
+      "red chard",
+      "silver beet"
+    ],
     "tags": [
       "produce"
     ],
@@ -6759,6 +7966,25 @@
   {
     "canonicalName": "tamari",
     "synonyms": [],
+    "tags": [
+      "spice"
+    ],
+    "description": "A culinary spice or seasoning used for flavor.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
+    "canonicalName": "tamarind",
+    "synonyms": [
+      "tamarind paste",
+      "tamarind concentrate",
+      "tamarind pulp"
+    ],
     "tags": [
       "spice"
     ],
@@ -6805,7 +8031,10 @@
   },
   {
     "canonicalName": "tarragon",
-    "synonyms": [],
+    "synonyms": [
+      "french tarragon",
+      "dried tarragon"
+    ],
     "tags": [
       "herb"
     ],
@@ -6914,6 +8143,27 @@
     ]
   },
   {
+    "canonicalName": "thai chili",
+    "synonyms": [
+      "thai chili pepper",
+      "thai chile",
+      "birds eye chili",
+      "bird eye chili",
+      "thai pepper"
+    ],
+    "tags": [
+      "produce"
+    ],
+    "description": "A vegetable ingredient used in foods and drinks.",
+    "considerations": [],
+    "citations": [
+      {
+        "title": "Open Food Facts Ingredients Taxonomy",
+        "url": "https://wiki.openfoodfacts.org/Ingredients_taxonomy"
+      }
+    ]
+  },
+  {
     "canonicalName": "thiamin",
     "synonyms": [
       "thiamine",
@@ -6933,7 +8183,10 @@
   },
   {
     "canonicalName": "thyme",
-    "synonyms": [],
+    "synonyms": [
+      "fresh thyme",
+      "dried thyme"
+    ],
     "tags": [
       "herb"
     ],
@@ -7000,7 +8253,11 @@
   },
   {
     "canonicalName": "tomato",
-    "synonyms": [],
+    "synonyms": [
+      "tomatoes",
+      "fresh tomato",
+      "fresh tomatoes"
+    ],
     "tags": [
       "produce"
     ],
@@ -7015,7 +8272,10 @@
   },
   {
     "canonicalName": "tomato paste",
-    "synonyms": [],
+    "synonyms": [
+      "tomato puree paste",
+      "concentrated tomato"
+    ],
     "tags": [
       "produce"
     ],
@@ -7144,7 +8404,11 @@
     "canonicalName": "turmeric",
     "synonyms": [
       "curcumin",
-      "e100"
+      "e100",
+      "ground turmeric",
+      "turmeric powder",
+      "turmeric root",
+      "curcuma"
     ],
     "tags": [
       "color",
@@ -7191,7 +8455,9 @@
   },
   {
     "canonicalName": "turnip",
-    "synonyms": [],
+    "synonyms": [
+      "turnips"
+    ],
     "tags": [
       "produce"
     ],
@@ -7301,7 +8567,9 @@
   },
   {
     "canonicalName": "watercress",
-    "synonyms": [],
+    "synonyms": [
+      "garden cress"
+    ],
     "tags": [
       "herb"
     ],
@@ -7316,7 +8584,9 @@
   },
   {
     "canonicalName": "watermelon",
-    "synonyms": [],
+    "synonyms": [
+      "watermelons"
+    ],
     "tags": [
       "produce"
     ],
@@ -7435,7 +8705,11 @@
   },
   {
     "canonicalName": "white pepper",
-    "synonyms": [],
+    "synonyms": [
+      "ground white pepper",
+      "white peppercorn",
+      "white peppers"
+    ],
     "tags": [
       "spice"
     ],
@@ -7704,7 +8978,11 @@
   },
   {
     "canonicalName": "zucchini",
-    "synonyms": [],
+    "synonyms": [
+      "zucchinis",
+      "courgette",
+      "courgettes"
+    ],
     "tags": [
       "produce"
     ],
