@@ -25,7 +25,7 @@ const ScoreGauge = ({ score, verdict }) => {
     // Color based on score
     const getScoreColor = (s) => {
         if (s >= 80) return { from: '#10b981', to: '#34d399', text: 'text-emerald-600', label: 'Excellent' };
-        if (s >= 60) return { from: '#6366f1', to: '#818cf8', text: 'text-indigo-600', label: 'Good' };
+        if (s >= 60) return { from: '#3d9f4f', to: '#70c07d', text: 'text-green-700', label: 'Good' };
         if (s >= 40) return { from: '#f59e0b', to: '#fbbf24', text: 'text-amber-600', label: 'Fair' };
         if (s >= 25) return { from: '#f97316', to: '#fb923c', text: 'text-orange-600', label: 'Poor' };
         return { from: '#ef4444', to: '#f87171', text: 'text-red-600', label: 'Bad' };

@@ -26,8 +26,8 @@ export default function AccountDrawer({ email, onClose, onManageProfiles, onSign
         {/* User info */}
         <div className="px-5 py-4 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
-              <span className="text-indigo-600 font-bold text-sm">
+            <div className="w-10 h-10 rounded-full bg-brandTint flex items-center justify-center">
+              <span className="text-brandDeep font-bold text-sm">
                 {(email || '?')[0].toUpperCase()}
               </span>
             </div>

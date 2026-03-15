@@ -6,6 +6,7 @@ import ScanPage from './components/ScanPage';
 import ResultsPage from './components/ResultsPage';
 import AccountDrawer from './components/AccountDrawer';
 import ProfilesManagePage from './components/ProfilesManagePage';
+import BrandLogo from './components/BrandLogo';
 import { scanBarcode, scanLabel } from './services/api';
 import evaluateOcrQuality from './utils/evaluateOcrQuality';
 
@@ -27,8 +28,8 @@ function AppInner() {
   // Show a simple spinner while Supabase checks the session
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-[#f5f7fb] flex items-center justify-center">
-        <div className="w-10 h-10 rounded-full border-4 border-gray-200 border-t-indigo-500 animate-spin" />
+      <div className="min-h-screen bg-bg1 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full border-4 border-gray-200 border-t-brand animate-spin" />
       </div>
     );
   }
@@ -92,36 +93,38 @@ function AppInner() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f7fb]">
+    <div className="min-h-screen bg-bg1">
       {/* Top bar with user info + menu */}
       <div className="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-gray-100 px-4 py-2 flex items-center justify-between">
-        {/* Left: go back to home if not on scan */}
-        <div className="flex items-center gap-2 min-w-0">
-          {view !== 'scan' && view !== 'loading' && (
-            <button
-              onClick={() => { if (view === 'profiles') setView('scan'); }}
-              className="text-sm text-gray-500 hover:text-indigo-600 font-medium truncate max-w-[200px]"
-            >
-              LabelLens
-            </button>
-          )}
-          {(view === 'scan' || view === 'loading') && (
-            <span className="text-sm text-gray-500 truncate max-w-[200px]">
-              {user?.email}
-            </span>
-          )}
-        </div>
-
-        {/* Right: menu button */}
         <button
-          onClick={() => setShowAccountDrawer(true)}
-          className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500 hover:text-gray-700"
-          title="Account menu"
+          onClick={() => { if (view !== 'loading') setView('scan'); }}
+          className="flex items-center gap-2 min-w-0 text-left"
         >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
+          <BrandLogo variant="icon" className="h-9 w-9 shrink-0" />
+          <div className="min-w-0">
+            <span className="block text-sm font-display font-bold text-[#145C2B] truncate">
+              KWYC
+            </span>
+            <span className="hidden sm:block text-[11px] text-gray-400 truncate">
+              Know What You Consume
+            </span>
+          </div>
         </button>
+
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="hidden sm:block text-sm text-gray-500 truncate max-w-[220px]">
+            {user?.email}
+          </span>
+          <button
+            onClick={() => setShowAccountDrawer(true)}
+            className="p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-500 hover:text-brandDeep"
+            title="Account menu"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Error toast */}
@@ -150,13 +153,13 @@ function AppInner() {
       )}
 
       {view === 'loading' && (
-        <div className="min-h-screen bg-[#f5f7fb] flex items-center justify-center">
+        <div className="min-h-screen bg-bg1 flex items-center justify-center">
           <div className="bg-white border border-gray-100 rounded-3xl shadow-card p-12 text-center animate-fade-in max-w-sm">
-            <div className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-gray-200 border-t-indigo-500 animate-spin" />
+            <div className="w-16 h-16 mx-auto mb-6 rounded-full border-4 border-gray-200 border-t-brand animate-spin" />
             <h2 className="text-2xl font-bold mb-3 gradient-text">Analyzing...</h2>
             <p className="text-gray-500 text-sm">Identifying ingredients, checking conflicts, and generating your personalized summary.</p>
             <div className="mt-6 w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full animate-pulse" style={{ width: '70%' }} />
+              <div className="h-full bg-gradient-to-r from-brandDeep to-brandSoft rounded-full animate-pulse" style={{ width: '70%' }} />
             </div>
           </div>
         </div>

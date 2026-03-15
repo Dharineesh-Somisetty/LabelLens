@@ -4,6 +4,7 @@
  */
 import { useState } from 'react';
 import { supabase } from '../services/supabaseClient';
+import BrandLogo from './BrandLogo';
 
 export default function Signup({ onSwitch }) {
   const [email, setEmail] = useState('');
@@ -38,13 +39,14 @@ export default function Signup({ onSwitch }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f7fb] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-bg1 flex items-center justify-center p-4">
       <form
         onSubmit={handleSubmit}
         className="bg-white border border-gray-100 rounded-3xl shadow-card p-8 w-full max-w-sm space-y-5 animate-fade-in"
       >
+        <BrandLogo showTagline className="mb-1" />
         <h1 className="text-2xl font-bold gradient-text text-center">Create Account</h1>
-        <p className="text-gray-500 text-sm text-center">Get started with LabelLens</p>
+        <p className="text-gray-500 text-sm text-center">Get started with KWYC</p>
 
         {error && (
           <p className="text-red-500 text-sm bg-red-50 rounded-lg px-3 py-2">{error}</p>
@@ -60,7 +62,7 @@ export default function Signup({ onSwitch }) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none text-sm transition"
+            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
             placeholder="you@example.com"
           />
         </div>
@@ -72,7 +74,7 @@ export default function Signup({ onSwitch }) {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none text-sm transition"
+            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
             placeholder="••••••••"
           />
         </div>
@@ -84,7 +86,7 @@ export default function Signup({ onSwitch }) {
             required
             value={confirm}
             onChange={(e) => setConfirm(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none text-sm transition"
+            className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
             placeholder="••••••••"
           />
         </div>
@@ -92,14 +94,14 @@ export default function Signup({ onSwitch }) {
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 text-white font-semibold text-sm hover:shadow-lg transition disabled:opacity-50"
+          className="w-full py-2.5 rounded-xl bg-gradient-to-r from-brandDeep to-brand text-white font-semibold text-sm hover:shadow-glow transition disabled:opacity-50"
         >
           {loading ? 'Creating account...' : 'Sign Up'}
         </button>
 
         <p className="text-center text-sm text-gray-400">
           Already have an account?{' '}
-          <button type="button" onClick={onSwitch} className="text-indigo-500 hover:underline font-medium">
+          <button type="button" onClick={onSwitch} className="text-brandDeep hover:underline font-medium">
             Sign In
           </button>
         </p>

@@ -78,13 +78,13 @@ const UnknownIngredientsModal = ({ unknownItems = [], fallbackItems = [], onClos
                         {fallbackItems.map((item) => (
                             <div
                                 key={item.normalized}
-                                className="bg-blue-50 border border-blue-100 rounded-xl px-3 py-2 mb-2 text-sm"
+                                className="bg-brandTint border border-brandLine rounded-xl px-3 py-2 mb-2 text-sm"
                             >
                                 <div className="flex items-center justify-between">
                                     <span className="font-medium text-gray-700">
                                         {item.display_name || item.normalized}
                                     </span>
-                                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200">
+                                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-brandDeep border border-brandLine">
                                         {item.fallback_category || item.category}
                                     </span>
                                 </div>

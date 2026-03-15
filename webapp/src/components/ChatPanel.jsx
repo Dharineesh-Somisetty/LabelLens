@@ -60,7 +60,7 @@ const ChatPanel = ({ sessionId, productName }) => {
                 <button
                     onClick={() => !disabled && setIsOpen(true)}
                     disabled={disabled}
-                    className="bg-indigo-500 hover:bg-indigo-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-glow transition-all"
+                    className="bg-brand hover:bg-brandDeep disabled:bg-gray-300 disabled:cursor-not-allowed text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-glow transition-all"
                     title={disabled ? 'Scan a product first' : 'Chat about this product'}
                 >
                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -75,9 +75,9 @@ const ChatPanel = ({ sessionId, productName }) => {
     return (
         <div className="fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-2rem)] max-h-[32rem] flex flex-col bg-white border border-gray-200 shadow-xl rounded-2xl overflow-hidden animate-slide-up">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-indigo-500 to-indigo-600">
+            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-brandDeep to-brand">
                 <div>
-                    <h3 className="text-white font-bold text-sm">LabelLens Chat</h3>
+                    <h3 className="text-white font-bold text-sm">KWYC Chat</h3>
                     <p className="text-white/70 text-xs truncate max-w-[14rem]">{productName || 'Current product'}</p>
                 </div>
                 <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white text-lg">&#x2715;</button>
@@ -95,7 +95,7 @@ const ChatPanel = ({ sessionId, productName }) => {
                         <div
                             className={`max-w-[80%] rounded-xl px-3 py-2 text-sm whitespace-pre-wrap ${
                                 m.role === 'user'
-                                    ? 'bg-indigo-500 text-white'
+                                    ? 'bg-brand text-white'
                                     : 'bg-white border border-gray-100 text-gray-700'
                             }`}
                         >
@@ -123,13 +123,13 @@ const ChatPanel = ({ sessionId, productName }) => {
                     onChange={e => setInput(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Ask about this product..."
-                    className="flex-1 px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:border-indigo-400"
+                    className="flex-1 px-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand"
                     disabled={loading}
                 />
                 <button
                     onClick={handleSend}
                     disabled={loading || !input.trim()}
-                    className="px-3 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors"
+                    className="px-3 py-2 bg-brand hover:bg-brandDeep text-white rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors"
                 >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />

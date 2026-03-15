@@ -30,7 +30,7 @@ const UnknownIngredientsBanner = ({ productScore }) => {
             <div className={`flex items-center justify-between rounded-2xl px-4 py-3 mb-4 border text-sm ${
                 unknown_count > 0
                     ? 'bg-amber-50 border-amber-200'
-                    : 'bg-blue-50 border-blue-200'
+                    : 'bg-brandTint border-brandLine'
             }`}>
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
                     <span className="font-semibold text-gray-700">
@@ -42,7 +42,7 @@ const UnknownIngredientsBanner = ({ productScore }) => {
                         </span>
                     )}
                     {fallback_count > 0 && (
-                        <span className="text-xs text-blue-700">
+                        <span className="text-xs text-brandDeep">
                             · {fallback_count} pattern-matched
                         </span>
                     )}

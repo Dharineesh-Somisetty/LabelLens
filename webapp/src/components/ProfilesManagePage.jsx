@@ -80,13 +80,13 @@ export default function ProfilesManagePage({ onBack }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f7fb] text-gray-800">
+    <div className="min-h-screen bg-bg1 text-gray-800">
       <div className="mx-auto max-w-2xl px-4 py-10">
 
         {/* Back button */}
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 mb-6 transition-colors"
+          className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-brandDeep mb-6 transition-colors"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -107,7 +107,7 @@ export default function ProfilesManagePage({ onBack }) {
           <div className="mb-4 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-2 flex items-center justify-between">
             <span>{error}</span>
             <div className="flex items-center gap-2 ml-2">
-              <button onClick={() => { setError(''); refresh(); }} className="text-indigo-500 font-medium hover:underline">Retry</button>
+              <button onClick={() => { setError(''); refresh(); }} className="text-brandDeep font-medium hover:underline">Retry</button>
               <button onClick={() => setError('')} className="text-red-400">&#x2715;</button>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function ProfilesManagePage({ onBack }) {
                   <div className="flex items-center gap-2">
                     <h3 className="text-sm font-bold text-gray-800">{p.name}</h3>
                     {p.is_default && (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 font-medium">
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-brandTint text-brandDeep border border-brandLine font-medium">
                         Default
                       </span>
                     )}
@@ -163,7 +163,7 @@ export default function ProfilesManagePage({ onBack }) {
                   {!p.is_default && (
                     <button
                       onClick={() => handleSetDefault(p.id)}
-                      className="text-xs text-gray-400 hover:text-indigo-500 p-1.5 rounded-lg hover:bg-gray-50 transition"
+                      className="text-xs text-gray-400 hover:text-brandDeep p-1.5 rounded-lg hover:bg-gray-50 transition"
                       title="Set as default"
                     >
                       ★
@@ -171,7 +171,7 @@ export default function ProfilesManagePage({ onBack }) {
                   )}
                   <button
                     onClick={() => { setEditTarget(p); setShowModal(true); }}
-                    className="text-xs text-gray-400 hover:text-indigo-500 p-1.5 rounded-lg hover:bg-gray-50 transition"
+                    className="text-xs text-gray-400 hover:text-brandDeep p-1.5 rounded-lg hover:bg-gray-50 transition"
                     title="Edit"
                   >
                     ✎
@@ -192,7 +192,7 @@ export default function ProfilesManagePage({ onBack }) {
             {/* Add profile button */}
             <button
               onClick={() => { setEditTarget({}); setShowModal(true); }}
-              className="w-full glass-strong p-4 text-center text-sm font-medium text-indigo-500 hover:text-indigo-600 hover:bg-indigo-50/50 transition border-2 border-dashed border-indigo-200 rounded-3xl"
+              className="w-full glass-strong p-4 text-center text-sm font-medium text-brandDeep hover:text-brand hover:bg-brandTint transition border-2 border-dashed border-brandLine rounded-3xl"
             >
               + Add Profile
             </button>

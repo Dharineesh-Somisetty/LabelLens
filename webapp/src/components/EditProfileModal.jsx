@@ -99,7 +99,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Mom, Dad, Kid"
-            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none text-sm transition"
+            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
           />
         </div>
 
@@ -116,7 +116,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
                 onClick={() => setDietStyle(opt.value)}
                 className={`px-3 py-1.5 rounded-full text-xs font-medium border transition ${
                   dietStyle === opt.value
-                    ? 'bg-indigo-50 border-indigo-300 text-indigo-700'
+                    ? 'bg-brandTint border-brandLine text-brandDeep'
                     : 'border-gray-200 text-gray-500 hover:border-gray-300'
                 }`}
               >
@@ -136,7 +136,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
             value={allergiesText}
             onChange={(e) => setAllergiesText(e.target.value)}
             placeholder="e.g. peanuts, milk, shellfish"
-            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none text-sm transition"
+            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
           />
         </div>
 
@@ -150,7 +150,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
             value={avoidText}
             onChange={(e) => setAvoidText(e.target.value)}
             placeholder="e.g. palm oil, MSG, aspartame"
-            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 outline-none text-sm transition"
+            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
           />
         </div>
 
@@ -166,7 +166,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 text-white text-sm font-semibold hover:shadow-lg transition disabled:opacity-50 flex items-center justify-center gap-2"
+            className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-brandDeep to-brand text-white text-sm font-semibold hover:shadow-glow transition disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {saving && (
               <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />

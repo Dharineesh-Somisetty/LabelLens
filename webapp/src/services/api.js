@@ -1,5 +1,5 @@
 /**
- * LabelLens API client.
+ * KWYC API client.
  * Base URL is configured via VITE_API_BASE_URL (never hardcode secrets here).
  */
 import axios from 'axios';

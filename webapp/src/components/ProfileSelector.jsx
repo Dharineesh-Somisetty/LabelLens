@@ -94,14 +94,14 @@ export default function ProfileSelector({ selectedId, onSelect }) {
         {error && (
           <div className="flex items-center gap-2 text-xs text-red-500 bg-red-50 rounded-lg px-3 py-1.5">
             <span className="flex-1">{error}</span>
-            <button onClick={() => { setError(''); setLoading(true); refresh(); }} className="text-indigo-500 font-medium hover:underline shrink-0">Retry</button>
+            <button onClick={() => { setError(''); setLoading(true); refresh(); }} className="text-brandDeep font-medium hover:underline shrink-0">Retry</button>
             <button onClick={() => setError('')} className="text-red-400">&#x2715;</button>
           </div>
         )}
         <p className="text-xs text-gray-400">No profiles yet.</p>
         <button
           onClick={() => { setEditTarget({}); setShowModal(true); }}
-          className="text-sm text-indigo-500 hover:text-indigo-600 font-medium"
+          className="text-sm text-brandDeep hover:text-brand font-medium"
         >
           + Create your first profile
         </button>
@@ -124,7 +124,7 @@ export default function ProfileSelector({ selectedId, onSelect }) {
           <span className="flex-1">{error}</span>
           <button
             onClick={() => { setError(''); setLoading(true); refresh(); }}
-            className="text-indigo-500 font-medium hover:underline shrink-0"
+            className="text-brandDeep font-medium hover:underline shrink-0"
           >
             Retry
           </button>
@@ -140,17 +140,17 @@ export default function ProfileSelector({ selectedId, onSelect }) {
               onClick={() => onSelect(p.id, p.name)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition whitespace-nowrap ${
                 selectedId === p.id
-                  ? 'bg-indigo-50 border-indigo-300 text-indigo-700'
+                  ? 'bg-brandTint border-brandLine text-brandDeep'
                   : 'border-gray-200 text-gray-600 hover:border-gray-300'
               }`}
             >
               {p.name}
-              {p.is_default && <span className="ml-1 text-[10px] text-indigo-400">★</span>}
+              {p.is_default && <span className="ml-1 text-[10px] text-brandSoft">★</span>}
             </button>
             <div className="opacity-0 group-hover:opacity-100 flex items-center ml-1 transition-opacity">
               <button
                 onClick={() => { setEditTarget(p); setShowModal(true); }}
-                className="text-gray-400 hover:text-indigo-500 text-xs p-1"
+                className="text-gray-400 hover:text-brandDeep text-xs p-1"
                 title="Edit"
               >
                 ✎
@@ -170,7 +170,7 @@ export default function ProfileSelector({ selectedId, onSelect }) {
 
         <button
           onClick={() => { setEditTarget({}); setShowModal(true); }}
-          className="flex-shrink-0 px-3 py-1.5 rounded-full border border-dashed border-gray-300 text-gray-400 text-sm hover:border-indigo-300 hover:text-indigo-500 transition"
+          className="flex-shrink-0 px-3 py-1.5 rounded-full border border-dashed border-gray-300 text-gray-400 text-sm hover:border-brandLine hover:text-brandDeep transition"
         >
           + Add
         </button>

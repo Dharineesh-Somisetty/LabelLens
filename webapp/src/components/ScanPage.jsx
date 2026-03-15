@@ -3,6 +3,7 @@ import { useDropzone } from 'react-dropzone';
 import Scanner from './Scanner';
 import ProfileSelector from './ProfileSelector';
 import useCameraCapture from '../hooks/useCameraCapture';
+import BrandLogo from './BrandLogo';
 
 const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityInfo, onAcceptPendingResult, onClearOcrQuality }) => {
     const [barcode, setBarcode] = useState('');
@@ -149,15 +150,13 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
     };
 
     return (
-        <div className="min-h-screen bg-[#f5f7fb] text-gray-800">
+        <div className="min-h-screen bg-bg1 text-gray-800">
             <div className="mx-auto max-w-2xl px-4 py-14">
 
                 {/* Hero */}
                 <div className="text-center mb-12 animate-fade-in">
-                    <h1 className="text-5xl sm:text-6xl font-display font-extrabold mb-3 gradient-text leading-tight">
-                        LabelLens
-                    </h1>
-                    <p className="text-lg text-gray-600">Scan. Understand. Decide.</p>
+                    <BrandLogo showTagline />
+                    <p className="mt-4 text-lg text-gray-600">Scan. Understand. Decide.</p>
                     <p className="text-gray-400 text-sm mt-1">
                         Scan a barcode or upload a label photo to get personalized ingredient insights.
                     </p>
@@ -196,7 +195,7 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                             <button
                                 onClick={() => setLabelMode('upload')}
                                 className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-all flex items-center gap-1.5 ${
-                                    labelMode === 'upload' ? 'bg-indigo-500 text-white shadow' : 'text-gray-500 hover:text-gray-700'
+                                    labelMode === 'upload' ? 'bg-brand text-white shadow' : 'text-gray-500 hover:text-brandDeep'
                                 }`}
                             >
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -207,7 +206,7 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                             <button
                                 onClick={() => setLabelMode('camera')}
                                 className={`px-5 py-1.5 rounded-full text-sm font-semibold transition-all flex items-center gap-1.5 ${
-                                    labelMode === 'camera' ? 'bg-indigo-500 text-white shadow' : 'text-gray-500 hover:text-gray-700'
+                                    labelMode === 'camera' ? 'bg-brand text-white shadow' : 'text-gray-500 hover:text-brandDeep'
                                 }`}
                             >
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -275,7 +274,7 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                                 onChange={(e) => setEditedText(e.target.value)}
                                 placeholder="Paste or edit the ingredient list here..."
                                 rows={5}
-                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-indigo-400 transition-colors text-sm resize-y"
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand transition-colors text-sm resize-y"
                             />
                             <div className="mt-3 flex justify-end">
                                 <button onClick={handleManualAnalyze} disabled={isLoading} className="btn-primary text-sm px-5 py-2">
@@ -290,13 +289,13 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                         <>
                             <div
                                 {...getRootProps()}
-                                className={`upload-zone p-10 text-center ${isDragActive ? 'active' : ''} ${previewUrl ? 'border-solid border-indigo-200' : ''}`}
+                                className={`upload-zone p-10 text-center ${isDragActive ? 'active' : ''} ${previewUrl ? 'border-solid border-brandLine' : ''}`}
                             >
                                 <input {...getInputProps()} />
                                 {!previewUrl ? (
                                     <div>
-                                        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-indigo-50 flex items-center justify-center">
-                                            <svg className="w-8 h-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-brandTint flex items-center justify-center">
+                                            <svg className="w-8 h-8 text-brandDeep" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                                             </svg>
                                         </div>
@@ -335,7 +334,7 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                             {/* Requesting permission */}
                             {cam.state === 'requesting-permission' && (
                                 <div className="p-10 text-center">
-                                    <div className="w-12 h-12 mx-auto mb-4 rounded-full border-4 border-gray-200 border-t-indigo-500 animate-spin" />
+                                    <div className="w-12 h-12 mx-auto mb-4 rounded-full border-4 border-gray-200 border-t-brand animate-spin" />
                                     <p className="text-gray-500 text-sm">Requesting camera access...</p>
                                 </div>
                             )}
@@ -442,7 +441,7 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                             <button
                                 onClick={() => setIsCameraMode(false)}
                                 className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                                    !isCameraMode ? 'bg-indigo-500 text-white shadow' : 'text-gray-500 hover:text-gray-700'
+                                    !isCameraMode ? 'bg-brand text-white shadow' : 'text-gray-500 hover:text-brandDeep'
                                 }`}
                             >
                                 Manual
@@ -450,7 +449,7 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                             <button
                                 onClick={() => setIsCameraMode(true)}
                                 className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                                    isCameraMode ? 'bg-indigo-500 text-white shadow' : 'text-gray-500 hover:text-gray-700'
+                                    isCameraMode ? 'bg-brand text-white shadow' : 'text-gray-500 hover:text-brandDeep'
                                 }`}
                             >
                                 Camera
@@ -466,7 +465,7 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                                 value={barcode}
                                 onChange={e => setBarcode(e.target.value)}
                                 placeholder="Enter barcode number..."
-                                className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-indigo-400 transition-colors"
+                                className="flex-1 px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand transition-colors"
                             />
                             <button
                                 type="submit"
@@ -487,7 +486,7 @@ const ScanPage = ({ onScanResult, isLoading, lastFailedBarcode = '', ocrQualityI
                         {
                             title: 'AI Analysis',
                             desc: 'Groq-powered ingredient parsing & evidence lookup',
-                            color: 'bg-indigo-50 text-indigo-600',
+                            color: 'bg-brandTint text-brandDeep',
                             icon: (
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />

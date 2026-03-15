@@ -9,7 +9,7 @@ import UnknownIngredientsBanner from './UnknownIngredientsBanner';
 const severityColor = {
     high: 'border-red-400 bg-red-50 text-red-700',
     warn: 'border-amber-400 bg-amber-50 text-amber-700',
-    info: 'border-indigo-400 bg-indigo-50 text-indigo-700',
+    info: 'border-brandLine bg-brandTint text-brandDeep',
 };
 
 /* -- grade pill color (light theme) ------------ */
@@ -84,8 +84,8 @@ const ViewToggle = ({ view, onChange }) => {
                     onClick={() => onChange(t.key)}
                     className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
                         view === t.key
-                            ? 'bg-indigo-100 text-indigo-700 border border-indigo-200 shadow-sm'
-                            : 'text-gray-500 hover:text-gray-700'
+                            ? 'bg-brandTint text-brandDeep border border-brandLine shadow-sm'
+                            : 'text-gray-500 hover:text-brandDeep'
                     }`}
                 >
                     {t.label}
@@ -184,13 +184,13 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
     const activePenalties = activeNutScore?.penalties ?? product_score?.penalties ?? [];
 
     return (
-        <div className="min-h-screen bg-[#f5f7fb] text-gray-800">
+        <div className="min-h-screen bg-bg1 text-gray-800">
             <div className="mx-auto max-w-4xl px-4 py-10 custom-scrollbar">
 
                 {/* -- Back button ---------------------- */}
                 <button
                     onClick={onReset}
-                    className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-indigo-600 mb-6 transition-colors"
+                    className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-brandDeep mb-6 transition-colors"
                 >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -215,7 +215,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                     )}
                     <NutritionStatusBadge status={nutritionStatus} source={nutrition_source} />
                     {scoredForName && (
-                        <p className="mt-2 text-xs text-indigo-500 font-medium">
+                        <p className="mt-2 text-xs text-brandDeep font-medium">
                             Scored for: {scoredForName}
                         </p>
                     )}
@@ -367,7 +367,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                                     <ul className="space-y-1 text-xs text-gray-600">
                                         {activeReasons.slice(0, 5).map((r, i) => (
                                             <li key={i} className="flex items-start gap-1.5">
-                                                <span className="text-indigo-500 mt-0.5">&#x2022;</span>{r}
+                                                <span className="text-brand mt-0.5">&#x2022;</span>{r}
                                             </li>
                                         ))}
                                     </ul>
@@ -507,7 +507,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                                             </span>
                                         )}
                                         {matchStatus === 'fallback' && (
-                                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200 shrink-0"
+                                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-brandTint text-brandDeep border border-brandLine shrink-0"
                                                   title={matchInfo?.reason || 'Detected by pattern'}>
                                                 {matchInfo?.fallback_category || 'Pattern'}
                                             </span>
@@ -565,7 +565,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                                                 href={e.source_url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="text-indigo-600 hover:underline text-sm font-medium"
+                                                className="text-brandDeep hover:underline text-sm font-medium"
                                             >
                                                 {e.title}
                                             </a>
