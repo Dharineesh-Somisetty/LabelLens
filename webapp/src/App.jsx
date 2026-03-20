@@ -266,6 +266,11 @@ function AppInner() {
               <p className="text-xs text-gray-500 leading-relaxed">Flags allergens, dietary conflicts, and ingredients to watch.</p>
             </div>
 
+            <div className="flank-tip-card">
+              <p className="text-xs font-bold text-brandDeep mb-1.5">Did you know?</p>
+              <p className="text-xs text-gray-600 leading-relaxed">Red 40 and Yellow 5 are banned in several EU countries but commonly found in US products.</p>
+            </div>
+
             {/* Decorative accent line */}
             <div className="flex items-center gap-2 pt-2 pl-1">
               <div className="w-8 h-0.5 rounded-full bg-brandLine" />
@@ -365,18 +370,7 @@ function AppInner() {
                 </div>
                 <p className="text-sm font-semibold text-gray-700">Family Profiles</p>
               </div>
-              <p className="text-xs text-gray-500 leading-relaxed">Separate scores for each family member.</p>
-            </div>
-
-            {/* Quick tips */}
-            <div className="flank-tip-card">
-              <p className="text-xs font-bold text-brandDeep mb-1.5">Did you know?</p>
-              <p className="text-xs text-gray-600 leading-relaxed">Red 40 and Yellow 5 are banned in several EU countries but commonly found in US products.</p>
-            </div>
-
-            <div className="flank-tip-card">
-              <p className="text-xs font-bold text-brandDeep mb-1.5">Tip</p>
-              <p className="text-xs text-gray-600 leading-relaxed">Create separate profiles for family members to get personalized scores for each person.</p>
+              <p className="text-xs text-gray-500 leading-relaxed">Create separate profiles for each family member to get personalized scores tailored to their allergies and dietary needs.</p>
             </div>
 
             {/* Decorative accent line */}
