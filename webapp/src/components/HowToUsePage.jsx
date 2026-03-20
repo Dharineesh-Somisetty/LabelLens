@@ -39,7 +39,7 @@ export default function HowToUsePage({ onBack }) {
             <div>
               <h3 className="font-bold text-gray-800 mb-1.5">Scan or Enter a Barcode</h3>
               <p className="text-sm text-gray-500 leading-relaxed">
-                Every packaged food or drink product has a barcode (the black-and-white lines on the packaging).
+                Since every packaged food or drink product comes with a barcode,
                 You can either <strong>scan it with your camera</strong> or <strong>type the number below the barcode</strong> manually.
               </p>
               <p className="text-sm text-gray-500 mt-2 leading-relaxed">

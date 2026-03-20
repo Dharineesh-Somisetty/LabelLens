@@ -7,7 +7,7 @@ AI-powered food & drink ingredient scanner with personalized conflict detection 
 | Layer | Tech | Location |
 |-------|------|----------|
 | Frontend | React 19 + Vite + Tailwind CSS | `webapp/` |
-| Backend | FastAPI + Gemini + SQLite | `backend/` |
+| Backend | FastAPI + Groq + SQLite | `backend/` |
 | Knowledge Base | JSON (40 ingredient entries) | `backend/kb/` |
 
 ## Running Locally (2 terminals)
@@ -18,7 +18,7 @@ AI-powered food & drink ingredient scanner with personalized conflict detection 
 cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env        # ← add your GEMINI_API_KEY
+cp .env.example .env        # ← add your Groq_API_KEY
 uvicorn app.main:app --reload --port 8000
 ```
 
