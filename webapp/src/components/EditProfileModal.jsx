@@ -1,6 +1,6 @@
 /**
  * EditProfileModal – create or edit a household profile.
- * Renders as a slide-up modal overlay.
+ * Clinical Naturalist design system.
  */
 import { useState, useEffect } from 'react';
 
@@ -26,7 +26,6 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
@@ -35,7 +34,6 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
     e.preventDefault();
     setError('');
 
-    // Client-side validation
     const trimmedName = name.trim();
     if (!trimmedName) {
       setError('Name is required.');
@@ -59,7 +57,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
     try {
       await onSave(data, profile?.id);
     } catch {
-      // Error is handled by parent (ProfileSelector)
+      // Error is handled by parent
     } finally {
       setSaving(false);
     }
@@ -76,22 +74,22 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
       {/* Panel */}
       <form
         onSubmit={handleSubmit}
-        className="relative z-10 bg-white rounded-t-3xl sm:rounded-3xl shadow-xl w-full max-w-md p-6 space-y-4 animate-slide-up"
+        className="relative z-10 bg-cn-surface-container-lowest rounded-t-3xl sm:rounded-3xl shadow-xl w-full max-w-md p-6 space-y-5 animate-slide-up"
       >
-        <h2 className="text-lg font-bold text-gray-800">
+        <h2 className="text-xl font-headline font-bold text-cn-on-surface">
           {isNew ? 'Add Profile' : 'Edit Profile'}
         </h2>
 
         {/* Error */}
         {error && (
-          <p className="text-xs text-red-500 bg-red-50 rounded-lg px-3 py-1.5">
+          <p className="text-xs text-cn-error bg-cn-error-container rounded-xl px-3 py-2 font-body">
             {error}
           </p>
         )}
 
         {/* Name */}
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">
+          <label className="block text-xs font-headline font-bold text-cn-on-surface-variant mb-1.5 uppercase tracking-wide">
             Name
           </label>
           <input
@@ -99,13 +97,13 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Mom, Dad, Kid"
-            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
+            className="w-full px-4 py-3 rounded-xl bg-cn-surface-container-low text-cn-on-surface font-body placeholder-cn-outline focus:outline-none focus:ring-2 focus:ring-cn-primary/20 transition text-sm"
           />
         </div>
 
         {/* Diet */}
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">
+          <label className="block text-xs font-headline font-bold text-cn-on-surface-variant mb-2 uppercase tracking-wide">
             Diet
           </label>
           <div className="flex flex-wrap gap-2">
@@ -114,10 +112,10 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
                 key={opt.value}
                 type="button"
                 onClick={() => setDietStyle(opt.value)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition font-body ${
                   dietStyle === opt.value
-                    ? 'bg-brandTint border-brandLine text-brandDeep'
-                    : 'border-gray-200 text-gray-500 hover:border-gray-300'
+                    ? 'bg-cn-primary-fixed text-cn-on-primary-fixed-variant'
+                    : 'bg-cn-surface-container-high text-cn-on-surface-variant hover:bg-cn-surface-container-highest'
                 }`}
               >
                 {opt.label}
@@ -128,7 +126,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
 
         {/* Allergies */}
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">
+          <label className="block text-xs font-headline font-bold text-cn-on-surface-variant mb-1.5 uppercase tracking-wide">
             Allergies (comma-separated)
           </label>
           <input
@@ -136,13 +134,13 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
             value={allergiesText}
             onChange={(e) => setAllergiesText(e.target.value)}
             placeholder="e.g. peanuts, milk, shellfish"
-            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
+            className="w-full px-4 py-3 rounded-xl bg-cn-surface-container-low text-cn-on-surface font-body placeholder-cn-outline focus:outline-none focus:ring-2 focus:ring-cn-primary/20 transition text-sm"
           />
         </div>
 
         {/* Avoid terms */}
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">
+          <label className="block text-xs font-headline font-bold text-cn-on-surface-variant mb-1.5 uppercase tracking-wide">
             Avoid (comma-separated)
           </label>
           <input
@@ -150,7 +148,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
             value={avoidText}
             onChange={(e) => setAvoidText(e.target.value)}
             placeholder="e.g. palm oil, MSG, aspartame"
-            className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:border-brand focus:ring-2 focus:ring-brandTint outline-none text-sm transition"
+            className="w-full px-4 py-3 rounded-xl bg-cn-surface-container-low text-cn-on-surface font-body placeholder-cn-outline focus:outline-none focus:ring-2 focus:ring-cn-primary/20 transition text-sm"
           />
         </div>
 
@@ -159,14 +157,14 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-2.5 rounded-xl border border-gray-200 text-gray-600 text-sm font-medium hover:bg-gray-50 transition"
+            className="flex-1 py-3 rounded-full bg-cn-surface-container-high text-cn-on-surface-variant font-headline font-bold text-sm hover:bg-cn-surface-container-highest transition"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-brandDeep to-brand text-white text-sm font-semibold hover:shadow-glow transition disabled:opacity-50 flex items-center justify-center gap-2"
+            className="flex-1 py-3 rounded-full bg-gradient-to-r from-cn-primary to-cn-primary-container text-cn-on-primary font-headline font-bold text-sm hover:shadow-cn-glow transition disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {saving && (
               <div className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />

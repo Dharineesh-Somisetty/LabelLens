@@ -7,6 +7,7 @@ export default {
     theme: {
         extend: {
             colors: {
+                /* ── Legacy brand aliases (keep for untouched components) ── */
                 brand: 'rgb(var(--brand) / <alpha-value>)',
                 brandSoft: 'rgb(var(--brand-soft) / <alpha-value>)',
                 brandDeep: 'rgb(var(--brand-deep) / <alpha-value>)',
@@ -15,6 +16,46 @@ export default {
                 brandGreen: 'rgb(var(--brand-green) / <alpha-value>)',
                 bg1: 'rgb(var(--bg1) / <alpha-value>)',
                 bg2: 'rgb(var(--bg2) / <alpha-value>)',
+
+                /* ── Clinical Naturalist design system ── */
+                'cn-primary': '#006d37',
+                'cn-primary-container': '#27ae60',
+                'cn-on-primary': '#ffffff',
+                'cn-on-primary-container': '#00391a',
+                'cn-primary-fixed': '#7efba4',
+                'cn-on-primary-fixed': '#00210c',
+                'cn-on-primary-fixed-variant': '#005228',
+
+                'cn-secondary': '#3c6847',
+                'cn-secondary-container': '#bdefc5',
+                'cn-on-secondary': '#ffffff',
+                'cn-on-secondary-container': '#426e4c',
+
+                'cn-tertiary': '#a7344c',
+                'cn-tertiary-container': '#f26d83',
+                'cn-on-tertiary': '#ffffff',
+                'cn-on-tertiary-container': '#670021',
+
+                'cn-error': '#ba1a1a',
+                'cn-error-container': '#ffdad6',
+                'cn-on-error': '#ffffff',
+
+                'cn-surface': '#f8fafb',
+                'cn-surface-dim': '#d8dadb',
+                'cn-surface-bright': '#f8fafb',
+                'cn-surface-container-lowest': '#ffffff',
+                'cn-surface-container-low': '#f2f4f5',
+                'cn-surface-container': '#eceeef',
+                'cn-surface-container-high': '#e6e8e9',
+                'cn-surface-container-highest': '#e1e3e4',
+                'cn-surface-variant': '#e1e3e4',
+
+                'cn-on-surface': '#191c1d',
+                'cn-on-surface-variant': '#3d4a3f',
+                'cn-outline': '#6d7a6e',
+                'cn-outline-variant': '#bccabc',
+
+                /* ── Keep existing palette for other pages ── */
                 primary: {
                     50: '#f2fbf2',
                     100: '#dcf4df',
@@ -58,6 +99,8 @@ export default {
             fontFamily: {
                 sans: ['Inter', 'system-ui', 'sans-serif'],
                 display: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
+                headline: ['Lexend', 'system-ui', 'sans-serif'],
+                body: ['Public Sans', 'Inter', 'system-ui', 'sans-serif'],
             },
             boxShadow: {
                 'glass': '0 2px 16px rgba(0, 0, 0, 0.06)',
@@ -65,6 +108,8 @@ export default {
                 'glow-accent': '0 0 20px rgba(16, 185, 129, 0.2)',
                 'card': '0 2px 16px rgba(0, 0, 0, 0.06)',
                 'card-hover': '0 4px 24px rgba(0, 0, 0, 0.10)',
+                'soft': '0 40px 60px -15px rgba(25, 28, 29, 0.06)',
+                'cn-glow': '0 0 24px rgba(0, 109, 55, 0.20)',
             },
             backdropBlur: {
                 xs: '2px',

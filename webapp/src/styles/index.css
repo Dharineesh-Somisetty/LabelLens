@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600;700;800&family=Public+Sans:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -12,41 +12,79 @@
   --brand-tint: 234 247 236;  /* very light green surface */
   --brand-line: 191 225 196;  /* brand border */
   --brand-green: 16 185 129;  /* emerald-500 */
-  --bg1: 246 250 245;         /* light green-gray */
-  --bg2: 236 244 234;         /* slightly deeper */
+  --bg1: 248 250 251;         /* cn-surface #f8fafb */
+  --bg2: 242 244 245;         /* cn-surface-container-low #f2f4f5 */
 }
 
 @layer base {
   body {
-    @apply bg-bg1 text-gray-800 min-h-screen;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    @apply bg-cn-surface text-cn-on-surface min-h-screen antialiased;
+    font-family: 'Public Sans', 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
 @layer components {
 
-  /* Light card styles */
+  /* ── Clinical Naturalist component classes ─── */
+
+  /* Medical glass effect */
+  .medical-glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Soft ambient shadow */
+  .shadow-soft {
+    box-shadow: 0 40px 60px -15px rgba(25, 28, 29, 0.06);
+  }
+
+  /* CN Card - tonal layering instead of borders */
+  .cn-card {
+    @apply bg-cn-surface-container-lowest rounded-3xl shadow-soft;
+  }
+
+  /* CN Card on low surface */
+  .cn-card-low {
+    @apply bg-cn-surface-container-low rounded-3xl;
+  }
+
+  /* ── Legacy card styles (keep for untouched components) ─── */
   .glass {
     @apply bg-white border border-gray-100 rounded-3xl shadow-card;
   }
 
   .glass-strong {
-    @apply bg-white border border-gray-100 rounded-3xl shadow-card;
+    @apply bg-cn-surface-container-lowest rounded-3xl shadow-soft;
   }
 
   /* Gradient text – green-based */
   .gradient-text {
-    @apply bg-gradient-to-r from-brandDeep to-brandSoft bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-cn-primary to-cn-primary-container bg-clip-text text-transparent;
   }
 
   /* Light background */
   .gradient-bg {
-    @apply bg-bg1;
+    @apply bg-cn-surface;
   }
 
-  /* Button styles */
+  /* ── CN Button styles ─── */
+  .btn-cn-primary {
+    @apply px-10 py-4 bg-white text-cn-primary rounded-full font-headline font-bold text-lg shadow-xl hover:scale-105 transition-transform active:scale-95;
+  }
+
+  .btn-cn-secondary {
+    @apply px-6 py-3 bg-cn-surface-container-high text-cn-on-secondary-container rounded-full font-body font-bold text-sm hover:bg-cn-surface-container-highest transition-colors;
+  }
+
+  .btn-cn-gradient {
+    @apply w-full py-5 rounded-full bg-gradient-to-r from-cn-primary to-cn-primary-container text-cn-on-primary font-headline font-bold text-lg shadow-xl hover:scale-[1.02] active:scale-95 transition-all;
+    box-shadow: 0 10px 30px -5px rgba(0, 109, 55, 0.2);
+  }
+
+  /* ── Legacy button styles (keep for untouched components) ─── */
   .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-brandDeep to-brand text-white font-semibold rounded-2xl shadow-md hover:shadow-glow transition-all duration-300 transform hover:scale-[1.03] active:scale-95;
+    @apply px-6 py-3 bg-gradient-to-r from-cn-primary to-cn-primary-container text-white font-semibold rounded-2xl shadow-md hover:shadow-cn-glow transition-all duration-300 transform hover:scale-[1.03] active:scale-95;
   }
 
   .btn-secondary {
@@ -59,11 +97,11 @@
 
   /* Upload zone */
   .upload-zone {
-    @apply bg-white border-2 border-dashed border-gray-300 hover:border-brandSoft hover:bg-brandTint transition-all duration-300 cursor-pointer rounded-3xl shadow-card;
+    @apply bg-cn-surface-container-lowest border-2 border-dashed border-cn-outline-variant hover:border-cn-primary-container hover:bg-cn-surface-container-low transition-all duration-300 cursor-pointer rounded-3xl shadow-soft;
   }
 
   .upload-zone.active {
-    @apply border-brand bg-brandTint shadow-lg;
+    @apply border-cn-primary bg-cn-surface-container-low shadow-lg;
   }
 
   /* Score gauge container */
@@ -73,7 +111,24 @@
 
   /* Ingredient card */
   .ingredient-card {
-    @apply bg-white border border-gray-100 rounded-2xl p-4 hover:bg-gray-50 transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg;
+    @apply bg-cn-surface-container-lowest rounded-2xl p-4 hover:bg-cn-surface-container-low transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg;
+  }
+
+  /* ── CN Chip styles ─── */
+  .cn-chip-positive {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-cn-primary-fixed text-cn-on-primary-fixed-variant rounded-full text-sm font-medium;
+  }
+
+  .cn-chip-warning {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-cn-tertiary-container text-cn-on-tertiary-container font-semibold;
+  }
+
+  .cn-chip-neutral {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-cn-surface-container-highest text-cn-on-surface hover:bg-cn-surface-variant transition-all;
+  }
+
+  .cn-chip-add {
+    @apply inline-flex items-center gap-2 px-4 py-2 bg-cn-surface-container-high text-cn-on-surface-variant rounded-full text-sm font-medium hover:bg-cn-surface-container-highest transition-colors;
   }
 
   /* Badge styles */
@@ -99,19 +154,19 @@
 
   /* Desktop flank decorative cards */
   .flank-card {
-    @apply bg-white border border-gray-100 rounded-2xl p-4 shadow-sm;
+    @apply bg-cn-surface-container-lowest rounded-2xl p-4 shadow-soft;
   }
 
   .flank-tip-card {
-    @apply bg-brandTint border border-brandLine/60 rounded-2xl p-4 shadow-sm;
+    @apply bg-cn-surface-container-low rounded-2xl p-4;
   }
 
   /* Nutrition chip */
   .nut-chip {
-    @apply bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 text-center min-w-[5rem];
+    @apply bg-cn-surface-container-low rounded-2xl px-4 py-3 text-center min-w-[5rem];
   }
 
-  /* Colored stat cards (inspired by the fitness app UI) */
+  /* Colored stat cards */
   .stat-card {
     @apply rounded-2xl px-5 py-4 relative overflow-hidden;
   }
@@ -132,6 +187,40 @@
   }
   .stat-card-cyan {
     @apply stat-card bg-gradient-to-br from-teal-50 to-teal-100 border border-teal-100;
+  }
+
+  /* ── CN Preference card ─── */
+  .cn-pref-card {
+    @apply relative flex items-center justify-between p-5 rounded-xl bg-cn-surface-container-lowest transition-all hover:bg-cn-surface-container-low cursor-pointer shadow-soft;
+  }
+
+  .cn-pref-card input[type="checkbox"] {
+    @apply h-6 w-6 rounded-full border-cn-outline-variant text-cn-primary accent-cn-primary;
+  }
+
+  /* ── CN Range slider ─── */
+  input[type="range"].cn-slider {
+    @apply w-full h-1.5 bg-cn-surface-container-high rounded-full appearance-none cursor-pointer;
+  }
+
+  input[type="range"].cn-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #006d37;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
+  }
+
+  input[type="range"].cn-slider::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #006d37;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 2px rgba(0,0,0,0.2);
   }
 }
 
