@@ -15,6 +15,7 @@ class UserProfile(BaseModel):
     allergies: List[str] = Field(default_factory=list)
     caffeine_limit_mg: Optional[int] = None
     avoid_terms: List[str] = Field(default_factory=list)
+    health_goal: Optional[str] = None
 
 # ──────────────────────────────────────────────
 # Evidence / Knowledge‑base snippets
@@ -188,6 +189,7 @@ class AnalysisResult(BaseModel):
     nutrition: Optional[Nutrition] = None
     product_score: Optional[ProductScore] = None
     personalized_summary: str = ""
+    health_goal: Optional[str] = None
     disclaimer: str = "Educational only; not medical advice."
     # Label extraction additions (backward-compatible)
     extraction: Optional[LabelExtraction] = None
@@ -244,6 +246,7 @@ class ProfileCreate(BaseModel):
     allergies: List[str] = Field(default_factory=list)
     avoid_terms: List[str] = Field(default_factory=list)
     diet_style: Optional[str] = None          # vegan | vegetarian | halal
+    health_goal: Optional[str] = None
     is_default: bool = False
 
 class ProfileUpdate(BaseModel):
@@ -251,6 +254,7 @@ class ProfileUpdate(BaseModel):
     allergies: Optional[List[str]] = None
     avoid_terms: Optional[List[str]] = None
     diet_style: Optional[str] = None
+    health_goal: Optional[str] = None
     is_default: Optional[bool] = None
 
 class ProfileResponse(BaseModel):
@@ -259,6 +263,7 @@ class ProfileResponse(BaseModel):
     allergies: List[str] = Field(default_factory=list)
     avoid_terms: List[str] = Field(default_factory=list)
     diet_style: Optional[str] = None
+    health_goal: Optional[str] = None
     is_default: bool = False
     created_at: Optional[datetime.datetime] = None
     updated_at: Optional[datetime.datetime] = None

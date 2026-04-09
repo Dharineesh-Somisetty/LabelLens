@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary-container": "#bdefc5",
+            "on-error": "#ffffff",
+            "tertiary-fixed": "#ffd9dc",
+            "error-container": "#ffdad6",
+            "secondary": "#3c6847",
+            "primary": "#006d37",
+            "surface-variant": "#e1e3e4",
+            "primary-container": "#27ae60",
+            "outline-variant": "#bccabc",
+            "on-background": "#191c1d",
+            "primary-fixed-dim": "#61de8a",
+            "secondary-fixed": "#bdefc5",
+            "inverse-surface": "#2e3132",
+            "outline": "#6d7a6e",
+            "on-surface": "#191c1d",
+            "surface-container-high": "#e6e8e9",
+            "on-secondary-fixed": "#00210c",
+            "on-secondary": "#ffffff",
+            "background": "#f8fafb",
+            "primary-fixed": "#7efba4",
+            "surface-container-low": "#f2f4f5",
+            "surface-bright": "#f8fafb",
+            "on-primary-fixed": "#00210c",
+            "tertiary-fixed-dim": "#ffb2bb",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed-variant": "#871b35",
+            "on-secondary-fixed-variant": "#234f31",
+            "on-primary-fixed-variant": "#005228",
+            "on-tertiary-container": "#670021",
+            "surface-tint": "#006d37",
+            "surface": "#f8fafb",
+            "tertiary": "#a7344c",
+            "surface-container": "#eceeef",
+            "error": "#ba1a1a",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed-dim": "#a2d2aa",
+            "on-secondary-container": "#426e4c",
+            "on-tertiary-fixed": "#400011",
+            "on-surface-variant": "#3d4a3f",
+            "surface-dim": "#d8dadb",
+            "on-error-container": "#93000a",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#eff1f2",
+            "surface-container-highest": "#e1e3e4",
+            "tertiary-container": "#f26d83",
+            "on-primary-container": "#00391a",
+            "inverse-primary": "#61de8a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "headline": ["Lexend"],
+            "body": ["Public Sans"],
+            "label": ["Public Sans"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+    .clinical-glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-[#f8fafb] dark:bg-slate-900 flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[#006d37] dark:text-[#27ae60]" style="font-variation-settings: 'FILL' 1;">biotech</span>
+<h1 class="text-xl font-bold text-[#191c1d] dark:text-slate-100 font-headline tracking-tight">Nutrition Analyzer</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-[#f2f4f5] dark:hover:bg-slate-800 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-600">share</span>
+</button>
+<button class="hover:bg-[#f2f4f5] dark:hover:bg-slate-800 transition-colors p-2 rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-slate-600">bookmark</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto">
+<!-- Hero Product Section -->
+<section class="mb-12 flex flex-col md:flex-row gap-8 items-end">
+<div class="relative w-48 h-48 flex-shrink-0 bg-surface-container-lowest rounded-full overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Close-up of a stack of chocolate sandwich cookies with white cream filling on a minimalist white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrJzmapkLRMKZWOU5cRdxVd6pr8Bb4Ah6TxrKk_90I-12pdj7gigDGe_5mzrrLvJ6UKWGR08JpULhMLHyKSNDvc4LStkJRp9JjmJ1eHsih11kFiEzu8u59gF-1ZjDIqQ4VQTvojxOqMJlaF7VqSAm1Rn2MbocbidN_8xixLe2-fDfebaSe6nybW0XeOqlbnOIXm3Z2Nq4YiJ9_Fo3tjt6C9bSygpQ_vPw5XwpUcY6rVnCyR4n9LDmoZ0dtj2crVmyg8xb19FsJqjCD"/>
+</div>
+<div class="flex-grow">
+<span class="font-headline text-sm font-semibold tracking-widest text-outline uppercase">Product Analysis</span>
+<h2 class="font-headline text-5xl font-extrabold text-on-surface mt-2 tracking-tighter">Oreo Cookies</h2>
+<div class="flex gap-2 mt-4">
+<span class="bg-tertiary-container text-on-tertiary-container px-4 py-1 rounded-full text-xs font-bold font-label uppercase">High Processed</span>
+<span class="bg-surface-container-high text-on-surface-variant px-4 py-1 rounded-full text-xs font-bold font-label uppercase">Bakery Goods</span>
+</div>
+</div>
+</section>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Large Wellness Score Card -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-full p-10 flex flex-col justify-between relative overflow-hidden group">
+<div class="relative z-10">
+<h3 class="font-headline text-lg font-bold text-on-surface mb-8">Wellness Score</h3>
+<div class="flex items-baseline gap-4">
+<span class="font-headline text-[12rem] font-black leading-none text-tertiary tracking-tighter">F</span>
+<div class="flex flex-col">
+<span class="font-headline text-4xl font-bold text-on-surface">0/100</span>
+<p class="text-on-surface-variant max-w-xs mt-2 text-sm leading-relaxed">This product lacks essential micronutrients and contains levels of processed sugars that exceed recommended daily intake for clinical wellness.</p>
+</div>
+</div>
+</div>
+<!-- Decorative subtle background element -->
+<div class="absolute -right-12 -bottom-12 w-64 h-64 bg-tertiary-container/10 rounded-full blur-3xl group-hover:bg-tertiary-container/20 transition-all duration-700"></div>
+</div>
+<!-- Match Status Card -->
+<div class="md:col-span-4 bg-tertiary-fixed text-on-tertiary-fixed rounded-full p-10 flex flex-col justify-center items-center text-center">
+<div class="w-20 h-20 rounded-full bg-on-tertiary-fixed/10 flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">person_cancel</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-2">Poor Match</h3>
+<p class="font-body text-sm opacity-80 leading-relaxed">Does not align with your goal: <br/><strong class="opacity-100">"Reduce Refined Sugars"</strong></p>
+<button class="mt-8 bg-on-tertiary-fixed text-white px-6 py-3 rounded-full text-sm font-bold font-label hover:opacity-90 transition-all active:scale-95">Find Alternatives</button>
+</div>
+<!-- Red Flags Card -->
+<div class="md:col-span-5 bg-surface-container-low rounded-full p-10">
+<h3 class="font-headline text-lg font-bold text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">warning</span>
+          Red Flags
+        </h3>
+<ul class="space-y-6">
+<li class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-sm text-on-tertiary-container">science</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface">High Fructose Corn Syrup</h4>
+<p class="text-xs text-on-surface-variant leading-tight mt-1">Associated with increased risk of metabolic syndrome and insulin resistance.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-sm text-on-tertiary-container">energy_savings_leaf</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface">Caffeine</h4>
+<p class="text-xs text-on-surface-variant leading-tight mt-1">Naturally occurring in cocoa, but significant when paired with high sugar loads.</p>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-tertiary-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-sm text-on-tertiary-container">opacity</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface">Palm Oil</h4>
+<p class="text-xs text-on-surface-variant leading-tight mt-1">High saturated fat content; controversial clinical and environmental impact.</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Nutrient Stats Card -->
+<div class="md:col-span-7 bg-surface-container-lowest rounded-full p-10">
+<h3 class="font-headline text-lg font-bold text-on-surface mb-8">Nutrient Profile</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<!-- Sugar Metric -->
+<div class="flex flex-col">
+<span class="font-headline text-4xl font-bold text-tertiary">14g</span>
+<span class="text-[10px] font-bold text-outline-variant uppercase tracking-widest mt-1">Sugar</span>
+<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[90%]"></div>
+</div>
+<span class="text-[10px] mt-2 text-tertiary font-bold">EXCESSIVE</span>
+</div>
+<!-- Fat Metric -->
+<div class="flex flex-col">
+<span class="font-headline text-4xl font-bold text-on-surface">7g</span>
+<span class="text-[10px] font-bold text-outline-variant uppercase tracking-widest mt-1">Fat</span>
+<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[45%]"></div>
+</div>
+<span class="text-[10px] mt-2 text-on-surface-variant font-medium">MODERATE</span>
+</div>
+<!-- Protein Metric -->
+<div class="flex flex-col">
+<span class="font-headline text-4xl font-bold text-on-surface">1g</span>
+<span class="text-[10px] font-bold text-outline-variant uppercase tracking-widest mt-1">Protein</span>
+<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-surface-variant w-[5%]"></div>
+</div>
+<span class="text-[10px] mt-2 text-on-surface-variant font-medium">NEGLIGIBLE</span>
+</div>
+<!-- Carbs Metric -->
+<div class="flex flex-col">
+<span class="font-headline text-4xl font-bold text-on-surface">25g</span>
+<span class="text-[10px] font-bold text-outline-variant uppercase tracking-widest mt-1">Carbs</span>
+<div class="w-full h-1 bg-surface-container mt-4 rounded-full overflow-hidden">
+<div class="h-full bg-primary-container w-[65%]"></div>
+</div>
+<span class="text-[10px] mt-2 text-on-surface-variant font-medium">HIGH</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recommendation Section -->
+<section class="mt-16 bg-[#f2f4f5] dark:bg-slate-800 rounded-full p-12 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="max-w-md">
+<h3 class="font-headline text-3xl font-bold text-on-surface tracking-tight">Better for you?</h3>
+<p class="text-on-surface-variant mt-2">Based on your clinical profile, we recommend organic dark chocolate alternatives with &gt;80% cocoa.</p>
+</div>
+<div class="flex -space-x-4">
+<div class="w-16 h-16 rounded-full border-4 border-white bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="High quality dark chocolate bar with almond pieces on a stone background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYeDHr_VlFU0AMr1Evq9pXK7rD-XRQcTjgrL8QtaHPAZM3waeNlgY8jkjrlJmHKJDC-ewOPWmEQ8sSMHMc9WM7FOgOZQN6bUDpQWsmkZ-B4zCBVDVr6oHyiWObhbrN62U8hk5Rsw7K375k0SPVmUx-NAbr5jNt2RSS__aTckP0oJS4Hv3g0-9DmaSeDYnrRM3wE49boss5bHzok_BaAcknMq-FAwi4Kr4ObhT12p-JFy9hXCmotQFKDYK-lXAzjyDZtXv750aD5lMi"/>
+</div>
+<div class="w-16 h-16 rounded-full border-4 border-white bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Raw organic cacao nibs in a wooden bowl under soft natural sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmGXXDp6vg5TZAPmD0subvmzkjhN3Vziot9lSoRWvzs-lgvIDrV-e1XwRvaBwVcEPBMDd2PS1B89OmujS7czg5lnykY5TJyRQwNLGbHDXRUfQZa9eIrrv6aRCpe4nqB9oUTW7mZmdiDesIz290--5q-LcEZYZQRbiexaRFjZhXZo5UZjockpP8aTUOwF1zcJz21n0HxnI-G3LyVl1OIQqQRfyeyEYJNAyb9IyfagxfWUa5G2ckinHzCAbm_SVAbC7s4Qpu52yYUOSW"/>
+</div>
+<div class="w-16 h-16 rounded-full border-4 border-white bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">arrow_forward</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl z-50 rounded-t-3xl shadow-[0_-4px_20px_0_rgba(25,28,29,0.06)] border-t border-[#bccabc]/15">
+<a class="flex flex-col items-center justify-center bg-[#27ae60]/10 text-[#006d37] dark:text-[#27ae60] rounded-2xl px-4 py-1 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">barcode_scanner</span>
+<span class="font-public-sans text-[10px] font-medium">Scan</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:opacity-80 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-public-sans text-[10px] font-medium">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:opacity-80 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">heart_plus</span>
+<span class="font-public-sans text-[10px] font-medium">Favorites</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 hover:opacity-80 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-public-sans text-[10px] font-medium">Profile</span>
+</a>
+</nav>
+</body></html>

@@ -313,6 +313,8 @@ async def groq_personalized_explain(
 USER PROFILE:
 {profile_text}
 
+HEALTH GOAL: {user_profile.health_goal or "Not specified"}
+
 PRODUCT: {analysis.product.name or 'Unknown'} by {analysis.product.brand or 'Unknown'}
 
 DETECTED INGREDIENTS: {ingredients_text}

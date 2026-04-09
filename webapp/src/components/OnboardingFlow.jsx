@@ -19,6 +19,7 @@ export default function OnboardingFlow({ onComplete, onNavigateHowTo }) {
   const [allergies, setAllergies] = useState([]);
   const [dietStyle, setDietStyle] = useState('');
   const [avoidTerms, setAvoidTerms] = useState('');
+  const [healthGoal, setHealthGoal] = useState('');
 
   const toggleAllergy = (a) => {
     setAllergies((prev) =>
@@ -35,6 +36,7 @@ export default function OnboardingFlow({ onComplete, onNavigateHowTo }) {
         .split(',')
         .map((t) => t.trim())
         .filter(Boolean),
+      health_goal: healthGoal.trim() || null,
       is_default: true,
     });
   };
@@ -156,6 +158,19 @@ export default function OnboardingFlow({ onComplete, onNavigateHowTo }) {
         rows={3}
         className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand transition-colors text-sm resize-none"
       />
+
+      <div className="mt-4">
+        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+          Health Goal <span className="font-normal normal-case opacity-60">(optional)</span>
+        </label>
+        <input
+          type="text"
+          value={healthGoal}
+          onChange={(e) => setHealthGoal(e.target.value)}
+          placeholder="e.g. Reduce Refined Sugars, Eat More Whole Foods"
+          className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand transition-colors text-sm"
+        />
+      </div>
 
       {/* Summary preview */}
       <div className="mt-5 bg-brandTint border border-brandLine rounded-2xl p-4">

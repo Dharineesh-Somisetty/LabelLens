@@ -175,6 +175,7 @@ def _profile_to_user_profile(profile: models.Profile) -> UserProfile:
         halal=diet == "halal",
         allergies=profile.allergies or [],
         avoid_terms=profile.avoid_terms or [],
+        health_goal=profile.health_goal,
     )
 
 
@@ -264,6 +265,7 @@ def create_profile(
         allergies=body.allergies,
         avoid_terms=body.avoid_terms,
         diet_style=body.diet_style,
+        health_goal=body.health_goal,
         is_default=is_default,
     )
     db.add(row)
@@ -522,6 +524,9 @@ async def _run_analysis_pipeline(
     except Exception as exc:
         logger.error("Groq summary failed: %s", exc)
         result.personalized_summary = "Summary unavailable – please try again."
+
+    # Attach health goal so frontend can display it in the goal match panel
+    result.health_goal = profile.health_goal
 
     # 7. Persist
     _save_session(db, result, profile, user_id=user_id, scan_type=scan_type, profile_name=profile_name)

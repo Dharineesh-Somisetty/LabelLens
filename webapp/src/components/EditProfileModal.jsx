@@ -22,6 +22,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
   const [avoidText, setAvoidText] = useState(
     (profile?.avoid_terms || []).join(', ')
   );
+  const [healthGoal, setHealthGoal] = useState(profile?.health_goal || '');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -52,6 +53,7 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
         .split(',')
         .map((s) => s.trim().toLowerCase())
         .filter(Boolean),
+      health_goal: healthGoal.trim() || null,
     };
 
     try {
@@ -148,6 +150,20 @@ export default function EditProfileModal({ profile, onSave, onClose }) {
             value={avoidText}
             onChange={(e) => setAvoidText(e.target.value)}
             placeholder="e.g. palm oil, MSG, aspartame"
+            className="w-full px-4 py-3 rounded-xl bg-cn-surface-container-low text-cn-on-surface font-body placeholder-cn-outline focus:outline-none focus:ring-2 focus:ring-cn-primary/20 transition text-sm"
+          />
+        </div>
+
+        {/* Health Goal */}
+        <div>
+          <label className="block text-xs font-headline font-bold text-cn-on-surface-variant mb-1.5 uppercase tracking-wide">
+            Health Goal <span className="font-normal normal-case opacity-60">(optional)</span>
+          </label>
+          <input
+            type="text"
+            value={healthGoal}
+            onChange={(e) => setHealthGoal(e.target.value)}
+            placeholder="e.g. Reduce Refined Sugars, Avoid Artificial Additives"
             className="w-full px-4 py-3 rounded-xl bg-cn-surface-container-low text-cn-on-surface font-body placeholder-cn-outline focus:outline-none focus:ring-2 focus:ring-cn-primary/20 transition text-sm"
           />
         </div>

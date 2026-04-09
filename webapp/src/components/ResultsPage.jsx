@@ -63,6 +63,22 @@ const processingStatusFromScore = (score, upfSignalsPresent) => {
     };
 };
 
+/* -- ingredient concern level helper ----------------- */
+const getIngredientConcern = (ing, matchInfo, flags) => {
+    const name = ing.name_canonical?.toLowerCase() ?? '';
+    if (flags.some(f => f.type === 'allergen' && f.related_ingredients.some(r => r.toLowerCase() === name)))
+        return 'allergen';
+    if (ing.tags.some(t => t.startsWith('upf_indicator_') || t === 'artificial-sweetener' || t === 'artificial_color' || t === 'artificial-color'))
+        return 'high';
+    if (['artificial_color', 'artificial_sweetener'].includes(matchInfo?.fallback_category))
+        return 'high';
+    if (flags.some(f => f.severity === 'high' && f.related_ingredients.some(r => r.toLowerCase() === name)))
+        return 'high';
+    if (['preservative', 'sweetener'].includes(matchInfo?.fallback_category))
+        return 'warn';
+    return null;
+};
+
 /* -- fallback badge maps for when no score available -- */
 const fallbackBadge = {
     minimally_processed: { label: 'Minimally Processed', colorClass: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: '🌿', description: '' },
@@ -111,6 +127,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
         flags,
         evidence,
         personalized_summary,
+        health_goal,
         disclaimer,
         nutrition_status: apiNutritionStatus,
         nutrition_source,
@@ -119,6 +136,7 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
     /* Determine default view from backend */
     const defaultView = product_score?.primary_nutrition_view || '100g';
     const [nutritionView, setNutritionView] = useState(defaultView);
+    const [showAllIngredients, setShowAllIngredients] = useState(false);
 
     /* Portion info */
     const portionInfo = product_score?.portion_info;
@@ -202,38 +220,22 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                 {/* ╔══════════════════════════════════════╗
                    ║  1 - HEADER CARD                     ║
                    ╚══════════════════════════════════════╝ */}
-                <div className="glass-strong p-6 mb-4 text-center animate-fade-in">
-                    {/* ── Prominent Health Score Badge ──────── */}
-                    {product_score && (
-                        <div className="mb-4">
-                            <div className={`inline-flex items-center gap-3 px-6 py-3 rounded-2xl border-2 ${
-                                displayScore >= 70 ? 'bg-emerald-50 border-emerald-200' :
-                                displayScore >= 40 ? 'bg-amber-50 border-amber-200' :
-                                'bg-red-50 border-red-200'
-                            }`}>
-                                <span className={`text-4xl font-extrabold ${
-                                    displayScore >= 70 ? 'text-emerald-600' :
-                                    displayScore >= 40 ? 'text-amber-600' :
-                                    'text-red-600'
-                                }`}>
-                                    {Math.round(displayScore)}
-                                </span>
-                                <div className="text-left">
-                                    <span className={`block text-sm font-bold ${
-                                        displayScore >= 70 ? 'text-emerald-700' :
-                                        displayScore >= 40 ? 'text-amber-700' :
-                                        'text-red-700'
-                                    }`}>
-                                        {displayScore >= 85 ? 'Excellent' :
-                                         displayScore >= 70 ? 'Good' :
-                                         displayScore >= 55 ? 'Fair' :
-                                         displayScore >= 40 ? 'Poor' : 'Avoid'}
-                                    </span>
-                                    <span className="text-xs text-gray-400">Health Score</span>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                <div className="glass-strong p-6 mb-4 animate-fade-in">
+                    <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-2">Product Analysis</p>
+
+                    {/* Processing + category pill tags */}
+                    <div className="flex flex-wrap gap-2 mb-3">
+                        {processingStatus && (
+                            <span className={`text-[11px] font-bold px-3 py-1 rounded-full border uppercase tracking-wide ${processingStatus.colorClass}`}>
+                                {processingStatus.label}
+                            </span>
+                        )}
+                        {product_score?.category && (
+                            <span className="text-[11px] font-bold px-3 py-1 rounded-full border border-gray-200 bg-gray-100 text-gray-600 uppercase tracking-wide">
+                                {product_score.category}
+                            </span>
+                        )}
+                    </div>
 
                     <h1 className="text-3xl sm:text-4xl font-display font-extrabold mb-1 text-gray-900 leading-tight">
                         {product?.name || 'Product Analysis'}
@@ -294,62 +296,109 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                    ╚══════════════════════════════════════╝ */}
                 {product_score && (
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 mb-4 animate-slide-up">
-                        {/* Score gauge card */}
-                        <div className="lg:col-span-5 glass-strong p-6 flex flex-col items-center justify-center">
-                            <h2 className="text-lg font-bold mb-2 text-gray-700">Wellness Score</h2>
+                        {/* Wellness Score card — redesigned */}
+                        <div className="lg:col-span-5 glass-strong p-6">
+                            <h2 className="text-lg font-bold mb-4 text-gray-700">Wellness Score</h2>
 
                             {/* View toggle */}
                             {hasBothViews && (
-                                <div className="mb-3">
+                                <div className="mb-4">
                                     <ViewToggle view={nutritionView} onChange={setNutritionView} />
                                 </div>
                             )}
 
-                            <ScoreGauge score={Math.round(displayScore)} />
+                            <div className="flex gap-4">
+                                {/* Left: Big letter grade */}
+                                <div className="flex-1">
+                                    <div className={`text-8xl font-extrabold leading-none mb-1 ${
+                                        displayGrade === 'A' || displayGrade === 'B' ? 'text-emerald-600' :
+                                        displayGrade === 'C' ? 'text-amber-600' :
+                                        displayGrade === 'D' ? 'text-orange-600' :
+                                        'text-red-600'
+                                    }`}>
+                                        {displayGrade}
+                                    </div>
+                                    <div className={`text-2xl font-bold mb-1 ${
+                                        displayScore >= 70 ? 'text-emerald-700' :
+                                        displayScore >= 40 ? 'text-amber-700' :
+                                        'text-red-700'
+                                    }`}>
+                                        {Math.round(displayScore)}<span className="text-base font-normal text-gray-400">/100</span>
+                                    </div>
+                                    <p className="text-xs text-gray-500 leading-snug">
+                                        {displayScore >= 85 ? 'Excellent – very nutritious choice.' :
+                                         displayScore >= 70 ? 'Good – solid nutritional profile.' :
+                                         displayScore >= 55 ? 'Fair – some nutritional concerns.' :
+                                         displayScore >= 40 ? 'Poor – notable nutritional drawbacks.' :
+                                         'Avoid – significant health concerns.'}
+                                    </p>
 
-                            {/* Grade pill */}
-                            <div className="mt-3">
-                                <span className={`inline-block px-5 py-1.5 rounded-full text-sm font-bold tracking-wide border ${gradeColor[displayGrade] || gradeColor.C}`}>
-                                    Grade {displayGrade}
-                                </span>
-                            </div>
-
-                            {/* Portion note */}
-                            {isPortionSensitive && portionInfo?.note && (
-                                <p className="mt-2 text-xs text-gray-400 italic leading-relaxed max-w-xs mx-auto text-center">
-                                    {portionInfo.note}
-                                    {portionInfo.typical_serving_text && (
-                                        <span className="block mt-0.5 text-gray-500 not-italic font-medium">
-                                            Typical serving: {portionInfo.typical_serving_text}
-                                        </span>
-                                    )}
-                                </p>
-                            )}
-
-                            {/* Processing Status Badge (human-readable) */}
-                            {processingStatus && (
-                                <div className="mt-3 text-center">
-                                    <span className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide border ${processingStatus.colorClass}`}>
-                                        <span>{processingStatus.icon}</span>
-                                        {processingStatus.label}
-                                    </span>
-                                    {processingStatus.description && (
-                                        <p className="mt-1 text-[11px] text-gray-400 max-w-[16rem] mx-auto leading-snug">
-                                            {processingStatus.description}
-                                        </p>
-                                    )}
-                                    {procScore != null && (
-                                        <p className="mt-0.5 text-[10px] text-gray-400">
-                                            Processing score: {procScore}/100
+                                    {/* Portion note */}
+                                    {isPortionSensitive && portionInfo?.note && (
+                                        <p className="mt-2 text-xs text-gray-400 italic leading-relaxed">
+                                            {portionInfo.note}
+                                            {portionInfo.typical_serving_text && (
+                                                <span className="block mt-0.5 text-gray-500 not-italic font-medium">
+                                                    Serving: {portionInfo.typical_serving_text}
+                                                </span>
+                                            )}
                                         </p>
                                     )}
                                 </div>
-                            )}
+
+                                {/* Right: Goal match panel */}
+                                <div className={`flex-shrink-0 w-36 rounded-2xl p-3 flex flex-col items-center justify-center text-center gap-1.5 ${
+                                    displayScore >= 70 ? 'bg-emerald-50 border border-emerald-200' :
+                                    displayScore >= 40 ? 'bg-amber-50 border border-amber-200' :
+                                    'bg-red-50 border border-red-200'
+                                }`}>
+                                    {/* Match icon */}
+                                    {displayScore >= 70 ? (
+                                        <svg className="w-8 h-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    ) : displayScore >= 40 ? (
+                                        <svg className="w-8 h-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                                        </svg>
+                                    ) : (
+                                        <svg className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                                        </svg>
+                                    )}
+                                    <span className={`text-xs font-bold ${
+                                        displayScore >= 70 ? 'text-emerald-700' :
+                                        displayScore >= 40 ? 'text-amber-700' :
+                                        'text-red-700'
+                                    }`}>
+                                        {displayScore >= 70 ? 'Good Match' :
+                                         displayScore >= 40 ? 'Fair Match' :
+                                         'Poor Match'}
+                                    </span>
+                                    <p className={`text-[10px] leading-snug ${
+                                        displayScore >= 70 ? 'text-emerald-600' :
+                                        displayScore >= 40 ? 'text-amber-600' :
+                                        'text-red-600'
+                                    }`}>
+                                        {health_goal
+                                            ? (displayScore >= 70
+                                                ? `Aligns with your goal: "${health_goal}"`
+                                                : `Does not align with your goal: "${health_goal}"`)
+                                            : (product_score?.personalized_conflicts?.[0]
+                                                || (displayScore >= 70
+                                                    ? 'Meets optimal wellness standards.'
+                                                    : 'Does not meet optimal wellness standards.'))}
+                                    </p>
+                                </div>
+                            </div>
 
                             {/* Nutrition sub-score */}
                             {nutScoreObj && (
-                                <div className="mt-3 flex justify-center gap-5 text-xs text-gray-400">
+                                <div className="mt-4 flex gap-5 text-xs text-gray-400">
                                     <span>Nutrition: <span className="text-gray-700 font-semibold">{nutScoreObj.score}</span>/100</span>
+                                    {procScore != null && (
+                                        <span>Processing: <span className="text-gray-700 font-semibold">{procScore}</span>/100</span>
+                                    )}
                                 </div>
                             )}
                         </div>
@@ -478,13 +527,52 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                    ║  3 - DETAILS SECTION                 ║
                    ╚══════════════════════════════════════╝ */}
 
-                {/* Personalized Summary */}
+                {/* Clinical Insight */}
                 {personalized_summary && (
                     <div className="glass-strong p-6 mb-4 animate-slide-up" style={{ animationDelay: '0.05s' }}>
-                        <h2 className="text-lg font-bold mb-3 text-gray-800">Personalized Summary</h2>
-                        <p className="text-gray-600 leading-relaxed whitespace-pre-wrap text-sm">
+                        <h2 className="text-lg font-bold mb-3 text-gray-800">Clinical Insight</h2>
+
+                        {/* Processing classification line */}
+                        {processingStatus && (
+                            <p className="text-sm text-gray-600 mb-3">
+                                This product is classified as{' '}
+                                <strong className={
+                                    upfSignalsPresent || (processingStatus.label || '').toLowerCase().includes('highly') || (processingStatus.label || '').toLowerCase().includes('ultra')
+                                        ? 'text-red-600'
+                                        : (processingStatus.label || '').toLowerCase().includes('moderately')
+                                            ? 'text-amber-600'
+                                            : 'text-emerald-600'
+                                }>
+                                    {processingStatus.label.toLowerCase()}
+                                </strong>.
+                            </p>
+                        )}
+
+                        <p className="text-gray-600 leading-relaxed whitespace-pre-wrap text-sm mb-4">
                             {personalized_summary}
                         </p>
+
+                        {/* 2 key concern mini-cards */}
+                        {(() => {
+                            const concerns = activeReasons.length > 0
+                                ? activeReasons.slice(0, 2)
+                                : flags.filter(f => f.severity === 'high').slice(0, 2).map(f => f.message);
+                            if (concerns.length === 0) return null;
+                            return (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                                    {concerns.map((reason, i) => (
+                                        <div key={i} className="flex items-start gap-3 bg-red-50 border border-red-100 rounded-xl p-3">
+                                            <div className="flex-shrink-0 w-7 h-7 rounded-lg bg-red-100 flex items-center justify-center">
+                                                <svg className="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+                                                </svg>
+                                            </div>
+                                            <p className="text-xs text-red-700 leading-snug font-medium">{reason}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            );
+                        })()}
                     </div>
                 )}
 
@@ -513,14 +601,14 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                     </div>
                 )}
 
-                {/* Ingredients list */}
+                {/* Ingredient Forensic */}
                 <div className="glass-strong p-6 mb-4 animate-slide-up" style={{ animationDelay: '0.12s' }}>
-                    <h2 className="text-lg font-bold mb-3 text-gray-800">
-                        Detected Ingredients ({ingredients.length})
-                    </h2>
-                    <div className="grid sm:grid-cols-2 gap-2">
-                        {ingredients.map((ing, i) => {
-                            /* Look up match status for this ingredient */
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-lg font-bold text-gray-800">Ingredient Forensic</h2>
+                        <span className="text-xs text-gray-400 font-medium">{ingredients.length} Total Ingredients</span>
+                    </div>
+                    <div className="space-y-2">
+                        {(showAllIngredients ? ingredients : ingredients.slice(0, 5)).map((ing, i) => {
                             const matchResults = product_score?.ingredient_match?.results || [];
                             const matchInfo = matchResults.find(
                                 (m) => m.normalized === ing.name_canonical?.toLowerCase()
@@ -528,35 +616,57 @@ const ResultsPage = ({ data, onReset, scoredForName }) => {
                                     || m.raw === ing.name_raw
                             );
                             const matchStatus = matchInfo?.status;
+                            const concern = getIngredientConcern(ing, matchInfo, flags);
 
                             return (
-                                <div key={i} className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-xl px-3 py-2 text-sm">
-                                    <div className="flex items-center gap-1.5 min-w-0">
-                                        <span className="text-gray-800 font-medium capitalize truncate">{ing.name_canonical}</span>
+                                <div key={i} className="flex items-center justify-between bg-gray-50 border border-gray-100 rounded-xl px-4 py-3">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                        {/* Concern dot indicator */}
+                                        <div className={`flex-shrink-0 w-2 h-2 rounded-full ${
+                                            concern === 'high' ? 'bg-red-500' :
+                                            concern === 'allergen' ? 'bg-amber-500' :
+                                            concern === 'warn' ? 'bg-orange-400' :
+                                            'bg-emerald-400'
+                                        }`} />
+                                        <span className="text-gray-800 font-medium capitalize text-sm truncate">{ing.name_canonical}</span>
                                         {ing.notes && <span className="text-gray-400 text-xs shrink-0">({ing.notes})</span>}
+                                    </div>
+                                    <div className="flex items-center gap-1.5 shrink-0 ml-2">
                                         {matchStatus === 'unknown' && (
-                                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200 shrink-0">
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200 font-semibold">
                                                 Unknown
                                             </span>
                                         )}
-                                        {matchStatus === 'fallback' && (
-                                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-brandTint text-brandDeep border border-brandLine shrink-0"
-                                                  title={matchInfo?.reason || 'Detected by pattern'}>
-                                                {matchInfo?.fallback_category || 'Pattern'}
+                                        {concern === 'high' && (
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-100 text-red-700 border border-red-200 font-semibold uppercase tracking-wide">
+                                                High Concern
                                             </span>
                                         )}
-                                    </div>
-                                    <div className="flex gap-1 flex-wrap justify-end shrink-0">
-                                        {ing.tags.slice(0, 3).map((t, j) => (
-                                            <span key={j} className="text-[10px] px-1.5 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">
-                                                {t}
+                                        {concern === 'allergen' && (
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 border border-amber-200 font-semibold uppercase tracking-wide">
+                                                Allergen Risk
                                             </span>
-                                        ))}
+                                        )}
+                                        {concern === 'warn' && (
+                                            <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 border border-gray-200 font-semibold uppercase tracking-wide">
+                                                Low Concern
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             );
                         })}
                     </div>
+                    {ingredients.length > 5 && (
+                        <button
+                            onClick={() => setShowAllIngredients(v => !v)}
+                            className="mt-3 w-full text-center text-sm font-semibold text-brandDeep hover:text-brand transition-colors py-2"
+                        >
+                            {showAllIngredients
+                                ? 'Show Less ▲'
+                                : `View ${ingredients.length - 5} More Ingredients ▼`}
+                        </button>
+                    )}
                 </div>
 
                 {/* Umbrella Terms */}

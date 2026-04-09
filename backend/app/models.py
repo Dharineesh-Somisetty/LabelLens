@@ -58,6 +58,7 @@ class Profile(Base):
     allergies = Column(JSON, default=list)       # e.g. ["peanuts", "milk"]
     avoid_terms = Column(JSON, default=list)     # e.g. ["palm oil", "MSG"]
     diet_style = Column(String, nullable=True)   # vegan | vegetarian | halal | null
+    health_goal = Column(String, nullable=True)  # e.g. "Reduce Refined Sugars"
     is_default = Column(Boolean, default=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
